@@ -1,0 +1,9 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="RedRose_VoucherScanner.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="api_base" Type="System.String" Scope="User">
+      <Value Profile="(Default)">https://192.168.0.30:8443/rest/voucherreaderapi/</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
