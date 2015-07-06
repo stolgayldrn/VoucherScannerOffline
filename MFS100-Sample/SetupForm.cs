@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 //using  OnBarcode.Barcode.BarcodeScanner;
-using BarcodeLib.BarcodeReader;
+//using BarcodeLib.BarcodeReader;
 
 namespace RedRose_VoucherScanner
 {
@@ -2469,6 +2469,11 @@ namespace RedRose_VoucherScanner
          {
             tConfig.tScanning.tRearSide2.bCut = false;
          }
+
+         if (tConfig.tScanning.tFrontSide1.sbFileName.ToString() == "" ||
+                      tConfig.tScanning.tFrontSide1.sbFileName.ToString() == null)
+             tConfig.tScanning.tFrontSide1.sbFileName.Insert(0, "FS-1%04d");
+
          // Set result to OK
          this.DialogResult = DialogResult.OK;
          //Exit setup form
@@ -2513,28 +2518,7 @@ namespace RedRose_VoucherScanner
          }
       }
 
-      private void cbBarcodeType_SelectedIndexChanged(object sender, EventArgs e)
-      {
-           switch (cbBarcodeType.SelectedIndex)
-         {
-            case 0 :
-            {
-               tConfig.tBarcode = BarcodeReader.CODE128;  
-               break;
-            }   
-            case 1:
-            {
-                tConfig.tBarcode = BarcodeReader.QRCODE;
-                break;
-            }
-            default:
-            {
-                tConfig.tBarcode = BarcodeReader.CODE128;
-                break;                
-            }
-          }
-
-      }
+      
 
       private void lblRearSideImage1FileName_Click(object sender, EventArgs e)
       {

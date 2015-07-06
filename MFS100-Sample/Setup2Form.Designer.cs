@@ -47,8 +47,6 @@
             this.gbVoucherType = new System.Windows.Forms.GroupBox();
             this.cbReadFont = new System.Windows.Forms.ComboBox();
             this.lblReadFont = new System.Windows.Forms.Label();
-            this.barcodeType = new System.Windows.Forms.Label();
-            this.cbBarcodeType = new System.Windows.Forms.ComboBox();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnOK = new System.Windows.Forms.Button();
             this.gbFeeding.SuspendLayout();
@@ -213,11 +211,9 @@
             // 
             // gbVoucherType
             // 
-            this.gbVoucherType.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.gbVoucherType.BackColor = System.Drawing.SystemColors.AppWorkspace;
             this.gbVoucherType.Controls.Add(this.cbReadFont);
             this.gbVoucherType.Controls.Add(this.lblReadFont);
-            this.gbVoucherType.Controls.Add(this.barcodeType);
-            this.gbVoucherType.Controls.Add(this.cbBarcodeType);
             this.gbVoucherType.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.gbVoucherType.Location = new System.Drawing.Point(14, 12);
             this.gbVoucherType.Name = "gbVoucherType";
@@ -249,28 +245,6 @@
             this.lblReadFont.TabIndex = 22;
             this.lblReadFont.Text = "Font:";
             this.lblReadFont.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // barcodeType
-            // 
-            this.barcodeType.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.barcodeType.Location = new System.Drawing.Point(19, 19);
-            this.barcodeType.Name = "barcodeType";
-            this.barcodeType.Size = new System.Drawing.Size(122, 21);
-            this.barcodeType.TabIndex = 20;
-            this.barcodeType.Text = "Barcode Type:";
-            this.barcodeType.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // cbBarcodeType
-            // 
-            this.cbBarcodeType.FormattingEnabled = true;
-            this.cbBarcodeType.Items.AddRange(new object[] {
-            "code 128",
-            "QR code"});
-            this.cbBarcodeType.Location = new System.Drawing.Point(151, 19);
-            this.cbBarcodeType.Name = "cbBarcodeType";
-            this.cbBarcodeType.Size = new System.Drawing.Size(94, 24);
-            this.cbBarcodeType.TabIndex = 21;
-            this.cbBarcodeType.SelectedIndexChanged += new System.EventHandler(this.cbBarcodeType_SelectedIndexChanged);
             // 
             // btnCancel
             // 
@@ -327,8 +301,6 @@
         private System.Windows.Forms.TextBox tbFeedTimeout;
         private System.Windows.Forms.Label lblFeedTimeout1;
         private System.Windows.Forms.GroupBox gbScanning;
-        private System.Windows.Forms.ComboBox cbBarcodeType;
-        private System.Windows.Forms.Label barcodeType;
         private System.Windows.Forms.Button btnImageDirectory;
         private System.Windows.Forms.TextBox tbImageDirectory;
         private System.Windows.Forms.Label lblImageDirectory;

@@ -3,7 +3,7 @@
   <Profiles />
   <Settings>
     <Setting Name="api_base" Type="System.String" Scope="User">
-      <Value Profile="(Default)">https://192.168.0.30:8443/rest/voucherreaderapi/</Value>
+      <Value Profile="(Default)">https://172.16.10.65:8443/rest/voucherreaderapi/</Value>
     </Setting>
   </Settings>
 </SettingsFile>

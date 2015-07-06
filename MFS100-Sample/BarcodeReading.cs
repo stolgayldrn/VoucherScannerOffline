@@ -8,22 +8,23 @@ using System.Text;
 using System.Windows.Forms;
 using System.Text.RegularExpressions;
 using WD_MFS100DN;
-using OnBarcode.Barcode.BarcodeScanner;
+//using OnBarcode.Barcode.BarcodeScanner;
 using System.Threading;
 using System.IO;
-using BarcodeLib.BarcodeReader;
+//using BarcodeLib.BarcodeReader;
+using ZXing;
 
 namespace RedRose_VoucherScanner
 {
     public partial class BarcodeReading : Form
     {
-        //
-        
-        BarcodeReader br_Tbarcode;
+        IBarcodeReader reader = new BarcodeReader();
+        List<BarcodeFormat> barcodeReaderPosFormats = new List<BarcodeFormat> { BarcodeFormat.CODE_128};
+
+        //BarcodeFormat br_Tbarcode;
         CFG br_Tconfig;
         MFS100DN br_Mfs100;
-        ValidForm br_VS = null;
-        statParams br_SP;
+       
         public string[] br_myBarcode = null;
         private List<string> br_myBarcodeList = new List<string>();
         //public BarcodeReading(ref CFG myTconfig, MFS100DN myMFS100, ref ValidForm myVS, ref statParams mySP)
@@ -33,12 +34,13 @@ namespace RedRose_VoucherScanner
             
             br_Tconfig = MF.tConfig;
             br_Mfs100 = myMFS100;
-            //br_Tbarcode = myTconfig.tBarcode;
+            //br_Tbarcode = br_Tconfig.tBarcode;
+            //barcodeReaderPosFormats = new List<BarcodeFormat> {br_Tbarcode};
             //br_VS = myVS;
             //br_SP = mySP;
 
             DirectoryInfo directory = new DirectoryInfo(br_Tconfig.tScanning.sbImageDirectory.ToString());
-
+            //Clean the directory
             Empty(directory);
 
             FileSystemWatcher watcher = new FileSystemWatcher();
@@ -87,13 +89,21 @@ namespace RedRose_VoucherScanner
 
         public void OnChanged(object sender, FileSystemEventArgs e)
         {
-            string imgFileName = e.FullPath;  
+            string imgFileName = e.FullPath;
+           
             try 
             {
+                //using OnBarcode.Barcode.BarcodeScanner;
                //br_myBarcode = BarcodeScanner.Scan(imgFileName, br_Tbarcode);
 
-                br_myBarcode = BarcodeReader.read(imgFileName, BarcodeReader.CODE128);
-                br_myBarcodeList.Add(br_myBarcode[0]);             
+                //using BarcodeLib.BarcodeReader;
+                //br_myBarcode = BarcodeReader.read(imgFileName, BarcodeReader.CODE128);
+             
+                //br_myBarcode = getBarcode(new Bitmap(imgFileName));
+
+
+                //using ZXing;
+                br_myBarcodeList.Add(getBarcode(new Bitmap(imgFileName)));             
             }
             catch(Exception ex)          
             {
@@ -112,9 +122,37 @@ namespace RedRose_VoucherScanner
 
         public void Empty( DirectoryInfo directory)
         {
-            foreach (System.IO.FileInfo file in directory.GetFiles()) file.Delete();
-            foreach (System.IO.DirectoryInfo subDirectory in directory.GetDirectories()) subDirectory.Delete(true);
+            try
+            {
+                foreach (System.IO.FileInfo file in directory.GetFiles()) file.Delete();
+                foreach (System.IO.DirectoryInfo subDirectory in directory.GetDirectories()) subDirectory.Delete(true);
+            }
+            catch (Exception ex)
+            {
+                //MessageBox.Show(ex.ToString(), "Red Rose Scan-Solutions - MFS100", 
+                  //  MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                int error = 1;
+
+            }
+           
         }
-        
+
+        private string getBarcode(Bitmap img)
+        {
+            if (img == null)
+                return "";
+
+            string text = "";
+            if (img.Width > 0 && img.Height > 0)
+            {
+                reader.Options.TryHarder = true;
+                reader.Options.PureBarcode = true;
+                reader.Options.PossibleFormats = barcodeReaderPosFormats;
+                Result resultDecode = reader.Decode(img);
+                if (resultDecode != null)
+                    text = resultDecode.Text;
+            }
+            return text;
+        }
      } 
 }

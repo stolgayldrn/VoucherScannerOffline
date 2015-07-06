@@ -7,16 +7,16 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 //using OnBarcode.Barcode.BarcodeScanner;
-using BarcodeLib.BarcodeReader;
+//using BarcodeLib.BarcodeReader;
+using ZXing;
 
 //Tolga Yildiran
 namespace RedRose_VoucherScanner
 {
     public partial class Setup2Form : Form
     {
-        public CFG tConfig;
-        String strEndoFont;
-        public MainForm s2_MF;
+        public CFG tConfig;        
+        public MainForm s2_MF;       
         public Setup2Form(CFG tClassAdress, MainForm myMF)
         {
             InitializeComponent();
@@ -40,21 +40,7 @@ namespace RedRose_VoucherScanner
             // Preset Scanning - Front side image 1 - File name
            
                      
-            cbBarcodeType.DropDownStyle = ComboBoxStyle.DropDownList;
-            switch (tConfig.tBarcode)
-            {
-                case BarcodeReader.CODE128:
-                    {
-                        cbBarcodeType.SelectedIndex = 0;
-                        break;
-                    }
-                
-                case BarcodeReader.QRCODE:
-                    {
-                        cbBarcodeType.SelectedIndex = 1;
-                        break;
-                    }
-            }
+            
             cbReadFont.DropDownStyle = ComboBoxStyle.DropDownList;
             switch(tConfig.tReading.eFont)
             {
@@ -118,22 +104,8 @@ namespace RedRose_VoucherScanner
             tConfig.tScanning.sbImageDirectory.Length = 0;
             tConfig.tScanning.sbImageDirectory.Insert(0,
                                                         tbImageDirectory.Text);
-            // Get value of Scanning - Front side image 1 - File name
-            tConfig.tScanning.tFrontSide1.sbFileName.Length = 0;
-          
-            switch(cbBarcodeType.SelectedIndex)
-            {
-                case 0:
-                    {
-                        tConfig.tBarcode = BarcodeReader.CODE128;
-                        break;
-                    }               
-                case 1:
-                    {
-                        tConfig.tBarcode = BarcodeReader.QRCODE;
-                        break;
-                    }
-            }
+
+            tConfig.tBarcode = BarcodeFormat.CODE_128;
 
             switch (cbReadFont.SelectedIndex)
             {
@@ -185,8 +157,12 @@ namespace RedRose_VoucherScanner
                         tConfig.tReading.eSortMode = CFG.READ_SORTMODE.NONE;
                         break;
                     }
+                    
             }
 
+            if (tConfig.tScanning.tFrontSide1.sbFileName.ToString() == "" ||
+                        tConfig.tScanning.tFrontSide1.sbFileName.ToString() == null)
+                tConfig.tScanning.tFrontSide1.sbFileName.Insert(0, "FS-1%04d");
 
 
             s2_MF.StoreConfiguration(tConfig);
@@ -196,28 +172,7 @@ namespace RedRose_VoucherScanner
             this.Close();
         }
 
-        private void cbBarcodeType_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            switch (cbBarcodeType.SelectedIndex)
-            {
-                case 0:
-                    {
-                        tConfig.tBarcode = BarcodeReader.CODE128;
-                        break;
-                    }               
-                case 1:
-                    {
-                        tConfig.tBarcode = BarcodeReader.QRCODE;
-                        break;
-                    }
-                default:
-                    {
-                        tConfig.tBarcode = BarcodeReader.CODE128;
-                        break;
-                    }
-            }
-
-        }
+      
 
         private void tbFeedTimeout_TextChanged(object sender, EventArgs e)
         {

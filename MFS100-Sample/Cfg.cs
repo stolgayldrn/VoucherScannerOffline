@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using BarcodeLib.BarcodeReader;
+//using BarcodeLib.BarcodeReader;
+using ZXing;
 
 namespace RedRose_VoucherScanner
 {
@@ -146,7 +147,8 @@ namespace RedRose_VoucherScanner
       public SCANNING  tScanning;
       public MFS_PARAMETERS  tMfsParameters;
        //Added by Tolga Yildiran
-      public int tBarcode = BarcodeReader.CODE128;
+      //public int tBarcode = BarcodeReader.CODE128;
+      public BarcodeFormat tBarcode = BarcodeFormat.CODE_128;
       public bool MICR_Reading;
    }
 }
