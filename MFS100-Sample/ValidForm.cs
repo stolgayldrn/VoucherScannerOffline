@@ -23,6 +23,7 @@ namespace RedRose_VoucherScanner
         public List<ValidationResult> resultsPublic = new List<ValidationResult>();
         public int totalValue = 0;
         public statParams SP = new statParams();
+        public List<String> rawBarcodes = new List<string>();
 
         protected override CreateParams CreateParams
         {
@@ -79,6 +80,7 @@ namespace RedRose_VoucherScanner
 
             SP = new statParams();
             statisticsItemsUpdateAndShow(lbStatistics, SP);
+            rawBarcodes.Clear();
         }
 
         private void btnValidate_Click(object sender, EventArgs e)
@@ -147,7 +149,7 @@ namespace RedRose_VoucherScanner
             btnSubmit.Enabled = false;
             btnSubmit.Visible = false;
             btnSubmit.Hide();
-
+           
             // clean codeline (MICR history)
             try
             {
@@ -161,6 +163,8 @@ namespace RedRose_VoucherScanner
                                    MessageBoxButtons.OK, MessageBoxIcon.Stop);
             }
 
+
+            //Barcode reading thread starts
             BarcodeReading barcodeRead1 = new BarcodeReading(ref parentMF ,
                     parentMF.Mfs100);
 
@@ -171,19 +175,39 @@ namespace RedRose_VoucherScanner
             
            
             //Real scanning code
-            //List<String> rawBarcodes = barcodeRead1.getMyBarcodeList();
+            List<String> rawBarcodesNew = barcodeRead1.getMyBarcodeList();
+            rawBarcodes.AddRange(rawBarcodesNew);
 
             ////Delete this fake operation for better scanner
-            List<String> rawBarcodes = parentMF.voucherScanFake();
+            //List<String> rawBarcodes = parentMF.voucherScanFake();
 
-            List<ValidationResult> tempResults = new List<ValidationResult>();
-            for (int i = 0; i < rawBarcodes.Count; i++)
+            for (int i = 0; i < rawBarcodesNew.Count; i++)
             {
                 var vr = new ValidationResult();
-                vr.barcode = rawBarcodes[i];
-                vr.errorMessage = "Validation Required!";
-                tempResults.Add(vr);
+                vr.barcode = rawBarcodesNew[i];
+                SP.imgCnt++;
+                if (vr.barcode == "")
+                    SP.invCnt++;
+                else
+                    SP.validCnt++;
             }
+
+
+            List<ValidationResult> tempResults = new List<ValidationResult>();
+            foreach (var rb in rawBarcodes)
+            {
+                var vr = new ValidationResult();
+                vr.barcode = rb;
+                vr.errorMessage = "Validation Required!";
+                tempResults.Add(vr);  
+            }
+            //for (int i = 0; i < rawBarcodes.Count; i++)
+            //{
+            //    var vr = new ValidationResult();
+            //    vr.barcode = rawBarcodes[i];
+            //    vr.errorMessage = "Validation Required!";
+            //    tempResults.Add(vr);                
+            //}
 
             BindGrid(tempResults);
 
@@ -207,8 +231,9 @@ namespace RedRose_VoucherScanner
             }
 
             duplicateCheck();
-            SP.imgCnt = rawBarcodes.Count();
+            //SP.imgCnt = rawBarcodes.Count();
             statisticsItemsUpdateAndShow(lbStatistics,SP);
+            
         }
 
         private void btnSubmit_Click(object sender, EventArgs e)
@@ -258,7 +283,7 @@ namespace RedRose_VoucherScanner
 
                     MessageBox.Show(totalValue.ToString() + " " + vrt.unitType + " is submitted to " +
                           selectedVendor, "Submission completed",
-                          MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                          MessageBoxButtons.OK, MessageBoxIcon.Information);
 
 
                     ///Clear everything
@@ -320,7 +345,7 @@ namespace RedRose_VoucherScanner
                 else
                     status = result.errorMessage;
 
-               int index = dgwValidateScreen.Rows.Add(result.barcode, valueText, status);
+               int index = dgwValidateScreen.Rows.Add(i+1,result.barcode, valueText, status);
                dgwValidateScreen.Rows[index].Tag = result;
                 
                 /*row.Cells[0].Value = false;
@@ -364,7 +389,7 @@ namespace RedRose_VoucherScanner
                         }
 
                         dgwValidateScreen.Rows.RemoveAt(i);
-
+                        rawBarcodes.RemoveAt(i);
                         if (next)
                             dgwValidateScreen.Rows[i].Selected = false;
                         i--;
@@ -401,7 +426,7 @@ namespace RedRose_VoucherScanner
                 {
                     ValidationResult vr = (ValidationResult)dgwValidateScreen.Rows[i].Tag;
                     barcodes.Add(vr.barcode);
-                    SP.validCnt++;
+                    //SP.validCnt++;
                 }
 
             for (int i = 1; i < barcodes.Count; i++)
@@ -414,7 +439,7 @@ namespace RedRose_VoucherScanner
                         barcodes.RemoveAt(i);
                         i--;                        
                         SP.reusedCnt++;
-                        SP.validCnt--;
+                        SP.validCnt--;                       
                         
                         break;
  

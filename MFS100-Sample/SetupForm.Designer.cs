@@ -94,8 +94,6 @@
             this.tbMaxImageWidth = new System.Windows.Forms.TextBox();
             this.lblMaxImageWidth1 = new System.Windows.Forms.Label();
             this.gbScanning = new System.Windows.Forms.GroupBox();
-            this.cbBarcodeType = new System.Windows.Forms.ComboBox();
-            this.barcodeType = new System.Windows.Forms.Label();
             this.tbEndoData = new System.Windows.Forms.TextBox();
             this.lblEndoData = new System.Windows.Forms.Label();
             this.cbEndoDensity = new System.Windows.Forms.ComboBox();
@@ -831,8 +829,6 @@
             // 
             // gbScanning
             // 
-            this.gbScanning.Controls.Add(this.cbBarcodeType);
-            this.gbScanning.Controls.Add(this.barcodeType);
             this.gbScanning.Controls.Add(this.gbScanningRearSideImage2);
             this.gbScanning.Controls.Add(this.gbScanningRearSideImage1);
             this.gbScanning.Controls.Add(this.gbScanningFrontSideImage2);
@@ -859,27 +855,6 @@
             this.gbScanning.TabIndex = 3;
             this.gbScanning.TabStop = false;
             this.gbScanning.Text = "Scanning";
-            // 
-            // cbBarcodeType
-            // 
-            this.cbBarcodeType.FormattingEnabled = true;
-            this.cbBarcodeType.Items.AddRange(new object[] {
-            "code 128",
-            "QR"});
-            this.cbBarcodeType.Location = new System.Drawing.Point(730, 48);
-            this.cbBarcodeType.Name = "cbBarcodeType";
-            this.cbBarcodeType.Size = new System.Drawing.Size(130, 21);
-            this.cbBarcodeType.TabIndex = 21;
-            this.cbBarcodeType.SelectedIndexChanged += new System.EventHandler(this.cbBarcodeType_SelectedIndexChanged);
-            // 
-            // barcodeType
-            // 
-            this.barcodeType.Location = new System.Drawing.Point(643, 47);
-            this.barcodeType.Name = "barcodeType";
-            this.barcodeType.Size = new System.Drawing.Size(81, 21);
-            this.barcodeType.TabIndex = 20;
-            this.barcodeType.Text = "Barcode Type:";
-            this.barcodeType.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // tbEndoData
             // 
@@ -1448,8 +1423,6 @@
       private System.Windows.Forms.TextBox tbMaxImageWidth;
       private System.Windows.Forms.Label lblMaxImageWidth1;
       private System.Windows.Forms.Button btnCancel;
-      private System.Windows.Forms.ComboBox cbBarcodeType;
-      private System.Windows.Forms.Label barcodeType;
       private System.Windows.Forms.Button btnOK;
    }
 }

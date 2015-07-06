@@ -39,14 +39,15 @@
             this.lblVendorName = new System.Windows.Forms.Label();
             this.btnSubmit = new System.Windows.Forms.Button();
             this.dgwValidateScreen = new System.Windows.Forms.DataGridView();
-            this.barcode = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.value = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.status = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btnClose = new System.Windows.Forms.Button();
             this.btnSelectAll = new System.Windows.Forms.Button();
             this.btnDeleteSelected = new System.Windows.Forms.Button();
             this.btnDeselectAll = new System.Windows.Forms.Button();
             this.tbTotalValue = new System.Windows.Forms.TextBox();
+            this.order = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.barcode = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.value = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.status = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.voucherBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgwValidateScreen)).BeginInit();
             this.SuspendLayout();
@@ -54,7 +55,7 @@
             // btnClear
             // 
             this.btnClear.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnClear.Location = new System.Drawing.Point(590, 92);
+            this.btnClear.Location = new System.Drawing.Point(861, 91);
             this.btnClear.Name = "btnClear";
             this.btnClear.Size = new System.Drawing.Size(138, 42);
             this.btnClear.TabIndex = 6;
@@ -65,7 +66,7 @@
             // btnValidate
             // 
             this.btnValidate.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnValidate.Location = new System.Drawing.Point(590, 311);
+            this.btnValidate.Location = new System.Drawing.Point(861, 310);
             this.btnValidate.Name = "btnValidate";
             this.btnValidate.Size = new System.Drawing.Size(138, 42);
             this.btnValidate.TabIndex = 7;
@@ -77,7 +78,7 @@
             // 
             this.lblStat.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lblStat.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblStat.Location = new System.Drawing.Point(551, 137);
+            this.lblStat.Location = new System.Drawing.Point(821, 137);
             this.lblStat.Name = "lblStat";
             this.lblStat.Size = new System.Drawing.Size(99, 68);
             this.lblStat.TabIndex = 10;
@@ -90,7 +91,7 @@
             this.lbStatistics.FormattingEnabled = true;
             this.lbStatistics.HorizontalScrollbar = true;
             this.lbStatistics.ItemHeight = 16;
-            this.lbStatistics.Location = new System.Drawing.Point(647, 137);
+            this.lbStatistics.Location = new System.Drawing.Point(918, 136);
             this.lbStatistics.Name = "lbStatistics";
             this.lbStatistics.Size = new System.Drawing.Size(81, 68);
             this.lbStatistics.TabIndex = 9;
@@ -99,7 +100,7 @@
             // 
             this.lblValue.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lblValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblValue.Location = new System.Drawing.Point(541, 224);
+            this.lblValue.Location = new System.Drawing.Point(811, 224);
             this.lblValue.Name = "lblValue";
             this.lblValue.Size = new System.Drawing.Size(109, 42);
             this.lblValue.TabIndex = 12;
@@ -109,7 +110,7 @@
             // btnStartReading
             // 
             this.btnStartReading.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnStartReading.Location = new System.Drawing.Point(590, 44);
+            this.btnStartReading.Location = new System.Drawing.Point(861, 43);
             this.btnStartReading.Name = "btnStartReading";
             this.btnStartReading.Size = new System.Drawing.Size(138, 42);
             this.btnStartReading.TabIndex = 13;
@@ -121,16 +122,17 @@
             // 
             this.lblVendorName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lblVendorName.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblVendorName.Location = new System.Drawing.Point(115, 33);
+            this.lblVendorName.Location = new System.Drawing.Point(245, 26);
             this.lblVendorName.Name = "lblVendorName";
             this.lblVendorName.Size = new System.Drawing.Size(272, 19);
             this.lblVendorName.TabIndex = 15;
+            this.lblVendorName.Text = "vendor name";
             this.lblVendorName.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // btnSubmit
             // 
             this.btnSubmit.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSubmit.Location = new System.Drawing.Point(590, 359);
+            this.btnSubmit.Location = new System.Drawing.Point(861, 358);
             this.btnSubmit.Name = "btnSubmit";
             this.btnSubmit.Size = new System.Drawing.Size(138, 42);
             this.btnSubmit.TabIndex = 16;
@@ -144,6 +146,7 @@
             this.dgwValidateScreen.AllowUserToDeleteRows = false;
             this.dgwValidateScreen.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgwValidateScreen.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.order,
             this.barcode,
             this.value,
             this.status});
@@ -152,8 +155,62 @@
             this.dgwValidateScreen.ReadOnly = true;
             this.dgwValidateScreen.RowTemplate.ReadOnly = true;
             this.dgwValidateScreen.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgwValidateScreen.Size = new System.Drawing.Size(533, 433);
+            this.dgwValidateScreen.Size = new System.Drawing.Size(773, 433);
             this.dgwValidateScreen.TabIndex = 17;
+            // 
+            // btnClose
+            // 
+            this.btnClose.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnClose.Location = new System.Drawing.Point(861, 466);
+            this.btnClose.Name = "btnClose";
+            this.btnClose.Size = new System.Drawing.Size(138, 42);
+            this.btnClose.TabIndex = 18;
+            this.btnClose.Text = "&Close";
+            this.btnClose.UseVisualStyleBackColor = true;
+            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
+            // 
+            // btnSelectAll
+            // 
+            this.btnSelectAll.Location = new System.Drawing.Point(32, 26);
+            this.btnSelectAll.Name = "btnSelectAll";
+            this.btnSelectAll.Size = new System.Drawing.Size(75, 23);
+            this.btnSelectAll.TabIndex = 19;
+            this.btnSelectAll.Text = "Select All";
+            this.btnSelectAll.UseVisualStyleBackColor = true;
+            this.btnSelectAll.Click += new System.EventHandler(this.btnSelectAll_Click);
+            // 
+            // btnDeleteSelected
+            // 
+            this.btnDeleteSelected.Location = new System.Drawing.Point(701, 23);
+            this.btnDeleteSelected.Name = "btnDeleteSelected";
+            this.btnDeleteSelected.Size = new System.Drawing.Size(104, 23);
+            this.btnDeleteSelected.TabIndex = 20;
+            this.btnDeleteSelected.Text = "Delete Selected";
+            this.btnDeleteSelected.UseVisualStyleBackColor = true;
+            this.btnDeleteSelected.Click += new System.EventHandler(this.btnDeleteSelected_Click);
+            // 
+            // btnDeselectAll
+            // 
+            this.btnDeselectAll.Location = new System.Drawing.Point(113, 26);
+            this.btnDeselectAll.Name = "btnDeselectAll";
+            this.btnDeselectAll.Size = new System.Drawing.Size(75, 23);
+            this.btnDeselectAll.TabIndex = 21;
+            this.btnDeselectAll.Text = "Deselect All";
+            this.btnDeselectAll.UseVisualStyleBackColor = true;
+            this.btnDeselectAll.Click += new System.EventHandler(this.btnDeselectAll_Click);
+            // 
+            // tbTotalValue
+            // 
+            this.tbTotalValue.Location = new System.Drawing.Point(918, 223);
+            this.tbTotalValue.Name = "tbTotalValue";
+            this.tbTotalValue.Size = new System.Drawing.Size(81, 20);
+            this.tbTotalValue.TabIndex = 22;
+            // 
+            // order
+            // 
+            this.order.HeaderText = "Order";
+            this.order.Name = "order";
+            this.order.ReadOnly = true;
             // 
             // barcode
             // 
@@ -174,60 +231,12 @@
             this.status.Name = "status";
             this.status.ReadOnly = true;
             // 
-            // btnClose
-            // 
-            this.btnClose.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnClose.Location = new System.Drawing.Point(590, 467);
-            this.btnClose.Name = "btnClose";
-            this.btnClose.Size = new System.Drawing.Size(138, 42);
-            this.btnClose.TabIndex = 18;
-            this.btnClose.Text = "&Close";
-            this.btnClose.UseVisualStyleBackColor = true;
-            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
-            // 
-            // btnSelectAll
-            // 
-            this.btnSelectAll.Location = new System.Drawing.Point(32, 26);
-            this.btnSelectAll.Name = "btnSelectAll";
-            this.btnSelectAll.Size = new System.Drawing.Size(75, 23);
-            this.btnSelectAll.TabIndex = 19;
-            this.btnSelectAll.Text = "Select All";
-            this.btnSelectAll.UseVisualStyleBackColor = true;
-            this.btnSelectAll.Click += new System.EventHandler(this.btnSelectAll_Click);
-            // 
-            // btnDeleteSelected
-            // 
-            this.btnDeleteSelected.Location = new System.Drawing.Point(372, 26);
-            this.btnDeleteSelected.Name = "btnDeleteSelected";
-            this.btnDeleteSelected.Size = new System.Drawing.Size(104, 23);
-            this.btnDeleteSelected.TabIndex = 20;
-            this.btnDeleteSelected.Text = "Delete Selected";
-            this.btnDeleteSelected.UseVisualStyleBackColor = true;
-            this.btnDeleteSelected.Click += new System.EventHandler(this.btnDeleteSelected_Click);
-            // 
-            // btnDeselectAll
-            // 
-            this.btnDeselectAll.Location = new System.Drawing.Point(113, 26);
-            this.btnDeselectAll.Name = "btnDeselectAll";
-            this.btnDeselectAll.Size = new System.Drawing.Size(75, 23);
-            this.btnDeselectAll.TabIndex = 21;
-            this.btnDeselectAll.Text = "Deselect All";
-            this.btnDeselectAll.UseVisualStyleBackColor = true;
-            this.btnDeselectAll.Click += new System.EventHandler(this.btnDeselectAll_Click);
-            // 
-            // tbTotalValue
-            // 
-            this.tbTotalValue.Location = new System.Drawing.Point(647, 224);
-            this.tbTotalValue.Name = "tbTotalValue";
-            this.tbTotalValue.Size = new System.Drawing.Size(81, 20);
-            this.tbTotalValue.TabIndex = 22;
-            // 
             // ValidForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.ClientSize = new System.Drawing.Size(751, 548);
+            this.ClientSize = new System.Drawing.Size(1021, 548);
             this.Controls.Add(this.tbTotalValue);
             this.Controls.Add(this.btnDeselectAll);
             this.Controls.Add(this.btnDeleteSelected);
@@ -267,9 +276,10 @@
         private System.Windows.Forms.Button btnSelectAll;
         private System.Windows.Forms.Button btnDeleteSelected;
         private System.Windows.Forms.Button btnDeselectAll;
+        private System.Windows.Forms.TextBox tbTotalValue;
+        private System.Windows.Forms.DataGridViewTextBoxColumn order;
         private System.Windows.Forms.DataGridViewTextBoxColumn barcode;
         private System.Windows.Forms.DataGridViewTextBoxColumn value;
         private System.Windows.Forms.DataGridViewTextBoxColumn status;
-        private System.Windows.Forms.TextBox tbTotalValue;
     }
 }

@@ -25,7 +25,7 @@ namespace RedRose_VoucherScanner.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("https://192.168.0.30:8443/rest/voucherreaderapi/")]
+        [global::System.Configuration.DefaultSettingValueAttribute("https://172.16.10.65:8443/rest/voucherreaderapi/")]
         public string api_base {
             get {
                 return ((string)(this["api_base"]));

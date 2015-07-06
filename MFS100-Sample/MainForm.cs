@@ -9,7 +9,8 @@ using System.Windows.Forms;
 using System.Text.RegularExpressions;
 using WD_MFS100DN;
 //using OnBarcode.Barcode.BarcodeScanner;
-using BarcodeLib.BarcodeReader;
+//using BarcodeLib.BarcodeReader;
+using ZXing;
 using System.Threading;
 using System.IO;
 
@@ -1041,7 +1042,7 @@ namespace RedRose_VoucherScanner
                 PUB_uiReadFont = uiReadFont;
                 PUB_iFeedMode = iFeedMode;
                 PUB_sbValue = sbValue;
-                setupFileNameCheck(ref tConfig);
+                tConfig.tScanning.tFrontSide1.eFormat = IMAGE_FORMAT.BMP;
                 StoreConfiguration(tConfig);
 
                 Vendor selectedVendor = new Vendor();
@@ -5380,7 +5381,7 @@ tempBarcodes.Add("90011-025-CC9");*/
           }
           defaultCFG.tScanning.sbImageDirectory = new StringBuilder();
           defaultCFG.tScanning.sbImageDirectory.Insert(0, "C:\\RedRose\\Images\\");
-          defaultCFG.tBarcode = BarcodeReader.CODE128;
+          defaultCFG.tBarcode = BarcodeFormat.CODE_128;
           //
           defaultCFG.tScanning.tFrontSide1.sbFileName = new StringBuilder();
           defaultCFG.tScanning.tFrontSide1.sbFileName.Insert(0,"FS-1%04d");
