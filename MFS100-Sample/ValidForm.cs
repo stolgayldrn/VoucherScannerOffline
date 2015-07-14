@@ -9,7 +9,7 @@ using System.Windows.Forms;
 using WD_MFS100DN;
 using System.Threading;
 using System.IO;
- 
+using RedRose_VoucherScanner.Properties;
 
 namespace RedRose_VoucherScanner
 {
@@ -23,8 +23,9 @@ namespace RedRose_VoucherScanner
         public List<ValidationResult> resultsPublic = new List<ValidationResult>();
         public int totalValue = 0;
         public statParams SP = new statParams();
-        public List<String> rawBarcodes = new List<string>();
-
+        public List<string> rawBarcodes = new List<string>();
+        public List<string> MICR_status= new List<string>();
+        private List<ValidationResult> tempResults;
         protected override CreateParams CreateParams
         {
             get
@@ -77,10 +78,14 @@ namespace RedRose_VoucherScanner
             tbTotalValue.Text = null;
             tbTotalValue.Update();
             dgwValidateScreen.Rows.Clear();
-
+            MICR_status.Clear();
             SP = new statParams();
             statisticsItemsUpdateAndShow(lbStatistics, SP);
             rawBarcodes.Clear();
+            tempResults.Clear();           
+           
+           
+
         }
 
         private void btnValidate_Click(object sender, EventArgs e)
@@ -122,14 +127,9 @@ namespace RedRose_VoucherScanner
             catch (Exception ex)
             {
                 MessageBox.Show(ex.ToString(),
-                                  "Red Rose Scan-Solutions - MFS100",
+                                  Settings.Default.messageBoxTitle,
                                    MessageBoxButtons.OK, MessageBoxIcon.Stop);
             }
-
-            //Gridview here
-
-            
-            
         }
 
         private void btnStartReading_Click(object sender, EventArgs e)
@@ -159,7 +159,7 @@ namespace RedRose_VoucherScanner
             {
                 MessageBox.Show(
                                   "Cannot open file codeline.txt for writing",
-                                  "Red Rose Scan-Solutions - MFS100",
+                                  Settings.Default.messageBoxTitle,
                                    MessageBoxButtons.OK, MessageBoxIcon.Stop);
             }
 
@@ -168,17 +168,15 @@ namespace RedRose_VoucherScanner
             BarcodeReading barcodeRead1 = new BarcodeReading(ref parentMF ,
                     parentMF.Mfs100);
 
-           
-            parentMF.VoucherScanning(this);
-            //parentMF.voucherScanFake(this);
-            System.Threading.Thread.Sleep(500);
-            
-           
             //Real scanning code
-            List<String> rawBarcodesNew = barcodeRead1.getMyBarcodeList();
+            parentMF.VoucherScanning(this);
+            System.Threading.Thread.Sleep(500);
+            //parentMF.voucherScanFake(this);
+            
+            List<string> rawBarcodesNew = barcodeRead1.getMyBarcodeList();
             rawBarcodes.AddRange(rawBarcodesNew);
 
-            ////Delete this fake operation for better scanner
+            ////Delete this fake operation if you have scanner
             //List<String> rawBarcodes = parentMF.voucherScanFake();
 
             for (int i = 0; i < rawBarcodesNew.Count; i++)
@@ -192,17 +190,23 @@ namespace RedRose_VoucherScanner
                     SP.validCnt++;
             }
 
+            List < string > MICR_statusNew = new List<string>();
+            MICR_control(rawBarcodesNew, ref MICR_statusNew);
+            MICR_status.AddRange(MICR_statusNew);
 
-            List<ValidationResult> tempResults = new List<ValidationResult>();
+           tempResults = new List<ValidationResult>();
+            int n = 0;
             foreach (var rb in rawBarcodes)
             {
                 var vr = new ValidationResult();
                 vr.barcode = rb;
                 vr.errorMessage = "Validation Required!";
-                tempResults.Add(vr);  
+                vr.MICR_status = MICR_status[n];
+                tempResults.Add(vr);
+                n++;
             }            
 
-            BindGrid(tempResults);
+           
 
             btnStartReading.Enabled = true;
             btnStartReading.Visible = true;
@@ -216,14 +220,10 @@ namespace RedRose_VoucherScanner
             btnValidate.Visible = true;
             btnValidate.Show();
 
-            List<string> MICR_list = new List<string>();
-            var lines = File.ReadAllLines("codeline.txt");
-            foreach (var line in lines)
-            {
-                MICR_list.Add(line.ToString());                
-            }
-
+            BindGrid(tempResults);
             duplicateCheck();
+            BindGrid(tempResults);
+
             //SP.imgCnt = rawBarcodes.Count();
             statisticsItemsUpdateAndShow(lbStatistics,SP);
             
@@ -265,24 +265,34 @@ namespace RedRose_VoucherScanner
                     + vStats.fifth.ToString() + " units 50 SSP "
                     +  "to " + selectedVendor,
                                                        "Submission Details",
-                                                       MessageBoxButtons.YesNoCancel,
+                                                       MessageBoxButtons.OKCancel,
                                                        MessageBoxIcon.Question);
 
-                if (result == DialogResult.Yes)
+                if (result == DialogResult.OK)
                 {
                     ValidationResult vrt = (ValidationResult)dgwValidateScreen.Rows[0].Tag;
                     req.vendorId = this.selectedVendor.id;
                     RestClient.UploadVouchers(req, parentMF.Username, parentMF.Password);
 
-                    MessageBox.Show(totalValue.ToString() + " " + vrt.unitType + " is submitted to " +
-                          selectedVendor, "Submission completed",
+                    if (totalValue == 0)
+                    {
+                        MessageBox.Show("Total value for submission is 0 to submit " + selectedVendor, "Submission completed",
                           MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    }
+                    else
+                    {
+                        MessageBox.Show(totalValue.ToString() + " " + vrt.unitType + " is submitted to " +
+                              selectedVendor, "Submission completed",
+                              MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
 
 
                     ///Clear everything
                     totalValue = 0;
                     tbTotalValue.Text = null;
                     dgwValidateScreen.Rows.Clear();
+                    tempResults.Clear();
                     SP = new statParams();
                     statisticsItemsUpdateAndShow(lbStatistics, SP);
 
@@ -302,7 +312,7 @@ namespace RedRose_VoucherScanner
             catch (Exception ex)
             {
                 MessageBox.Show(ex.ToString(),
-                                   "Red Rose Scan-Solutions - MFS100",
+                                   Settings.Default.messageBoxTitle,
                                     MessageBoxButtons.OK, MessageBoxIcon.Stop);
             }
             
@@ -328,7 +338,7 @@ namespace RedRose_VoucherScanner
                 ValidationResult result = results[i];
 
                 string valueText  = "";
-                string status = "";
+                string status = "";               
                 if (result.errorMessage == null ||
                     result.errorMessage == "Voucher is available for submission")
                 {
@@ -338,7 +348,7 @@ namespace RedRose_VoucherScanner
                 else
                     status = result.errorMessage;
 
-               int index = dgwValidateScreen.Rows.Add(i+1,result.barcode, valueText, status);
+                int index = dgwValidateScreen.Rows.Add(i + 1, result.barcode, valueText, result.MICR_status, status);
                dgwValidateScreen.Rows[index].Tag = result;
                 
                 /*row.Cells[0].Value = false;
@@ -426,16 +436,17 @@ namespace RedRose_VoucherScanner
             {
                 for (int ii = 0; ii < i; ii++)
                 {
-                    if (barcodes[ii] == barcodes[i])
+                    if ((barcodes[ii] == barcodes[i]) &&(barcodes[ii]!="No barcode"))
                     {
-                        dgwValidateScreen.Rows.RemoveAt(i);
-                        barcodes.RemoveAt(i);
+                        dgwValidateScreen.Rows.RemoveAt(ii);
+                        barcodes.RemoveAt(ii);
+                        rawBarcodes.RemoveAt(ii);
+                        MICR_status.RemoveAt(ii);
+                        tempResults.RemoveAt(ii);
                         i--;                        
                         SP.reusedCnt++;
-                        SP.validCnt--;                       
-                        
+                        SP.validCnt--;  
                         break;
- 
                     }
                 }
             }
@@ -452,6 +463,44 @@ namespace RedRose_VoucherScanner
             lbStatistics.Items.Add(mySP.invCnt.ToString());
             lbStatistics.Items.Add(mySP.reusedCnt.ToString());
             lbStatistics.Update();
+        }
+        private void MICR_control(List <string> barcodes, ref List< string> MICR_status)
+        {            
+            var lines = File.ReadAllLines("codeline.txt");
+            int i = 0;
+            foreach (var line in lines)
+            {
+                string barcode = barcodes[i];
+                if (barcode.Length > 11)
+                {
+                    barcode = barcode.Substring(0, 12);
+                    string MICR_code = line.ToString();
+                    if (MICR_code.Length > 26)
+                    {
+                        MICR_code = MICR_code.Substring(14, 12);
+                        int similarity = 0;
+                        for (int j = 0; j < 12; j++)
+                        {
+                            if (barcode.ElementAt(j) == MICR_code.ElementAt(j))
+                                similarity++;
+                        }
+
+                        if (similarity > 6)
+                            MICR_status.Add("Approved");
+                        else
+                            MICR_status.Add("Not Approved");
+                    }
+                    else
+                        MICR_status.Add("No MICR code");
+                }
+                else
+                {
+                    MICR_status.Add("No Barcode");
+                }
+                i++;
+                   
+            }
+
         }
 
       

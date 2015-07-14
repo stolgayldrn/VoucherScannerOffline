@@ -3,7 +3,10 @@
   <Profiles />
   <Settings>
     <Setting Name="api_base" Type="System.String" Scope="User">
-      <Value Profile="(Default)">https://172.16.10.65:8443/rest/voucherreaderapi/</Value>
+      <Value Profile="(Default)">https://nrcantep.redrosecps.com/rest/voucherreaderapi/</Value>
+    </Setting>
+    <Setting Name="messageBoxTitle" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Red Rose Voucher Reader</Value>
     </Setting>
   </Settings>
 </SettingsFile>

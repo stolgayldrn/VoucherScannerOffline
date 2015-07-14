@@ -25,13 +25,25 @@ namespace RedRose_VoucherScanner.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("https://172.16.10.65:8443/rest/voucherreaderapi/")]
+        [global::System.Configuration.DefaultSettingValueAttribute("https://nrcantep.redrosecps.com/rest/voucherreaderapi/")]
         public string api_base {
             get {
                 return ((string)(this["api_base"]));
             }
             set {
                 this["api_base"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Red Rose Voucher Reader")]
+        public string messageBoxTitle {
+            get {
+                return ((string)(this["messageBoxTitle"]));
+            }
+            set {
+                this["messageBoxTitle"] = value;
             }
         }
     }

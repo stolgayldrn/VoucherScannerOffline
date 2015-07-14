@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using WD_MFS100DN;
 using System.IO;
+using RedRose_VoucherScanner.Properties;
 
 namespace RedRose_VoucherScanner
 {

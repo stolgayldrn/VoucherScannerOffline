@@ -103,7 +103,11 @@ namespace RedRose_VoucherScanner
 
 
                 //using ZXing;
-                br_myBarcodeList.Add(getBarcode(new Bitmap(imgFileName)));             
+                string barcode = getBarcode(new Bitmap(imgFileName));
+                if(barcode == "")
+                    br_myBarcodeList.Add("No barcode");
+                else
+                    br_myBarcodeList.Add(barcode);
             }
             catch(Exception ex)          
             {

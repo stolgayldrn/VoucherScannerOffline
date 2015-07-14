@@ -9,6 +9,7 @@ using System.Windows.Forms;
 //using OnBarcode.Barcode.BarcodeScanner;
 //using BarcodeLib.BarcodeReader;
 using ZXing;
+using RedRose_VoucherScanner.Properties;
 
 //Tolga Yildiran
 namespace RedRose_VoucherScanner

@@ -8,11 +8,12 @@ using System.Text;
 using System.Windows.Forms;
 using System.Text.RegularExpressions;
 using WD_MFS100DN;
-//using OnBarcode.Barcode.BarcodeScanner;
-//using BarcodeLib.BarcodeReader;
 using ZXing;
 using System.Threading;
 using System.IO;
+using RedRose_VoucherScanner.Properties;
+//using OnBarcode.Barcode.BarcodeScanner;
+//using BarcodeLib.BarcodeReader;
 
 namespace RedRose_VoucherScanner
 {
@@ -614,7 +615,7 @@ namespace RedRose_VoucherScanner
             // Show error message         
             MessageBox.Show("Cannot create regular expression -> sort " + 
                                                 "pattern has to be invalid",
-                                "Red Rose Scan-Solutions - MFS100",
+                                Settings.Default.messageBoxTitle,
                                  MessageBoxButtons.OK, MessageBoxIcon.Stop);
             return;
          }
@@ -632,7 +633,7 @@ namespace RedRose_VoucherScanner
          {
             // Show error message         
             MessageBox.Show("Cannot open file codeline.txt for writing",
-                                "Red Rose Scan-Solutions - MFS100",
+                                Settings.Default.messageBoxTitle,
                                  MessageBoxButtons.OK, MessageBoxIcon.Stop);
             return;
          }
@@ -1042,7 +1043,7 @@ namespace RedRose_VoucherScanner
                 PUB_uiReadFont = uiReadFont;
                 PUB_iFeedMode = iFeedMode;
                 PUB_sbValue = sbValue;
-                tConfig.tScanning.tFrontSide1.eFormat = IMAGE_FORMAT.BMP;
+                defaultSettingsForRedRoseBatch(ref tConfig);               
                 StoreConfiguration(tConfig);
 
                 Vendor selectedVendor = new Vendor();
@@ -2639,7 +2640,7 @@ namespace RedRose_VoucherScanner
          tConfig.tFeeding.iTimeout = iValue;
          sbEntry.Length = 0;
          sbEntry.Insert(0, "DoublefeedThreshold");
-         iDefault = 70;   // default
+         iDefault = 120;   // default
          iValue = Mfs100.GetPrivProfileInt(sbSection, sbEntry, iDefault, 
                                               sbConfigFileName, sbErrorMsg);
          tConfig.tFeeding.iDoublefeedThreshold = iValue;
@@ -5060,8 +5061,6 @@ namespace RedRose_VoucherScanner
       }
       public void VoucherScanning(ValidForm myVS)
       {
-          
-         
           iResult = Mfs100.ScanFeeder(PUB_iFeedMode, PUB_uiReadFont,
                            tConfig.tFeeding.iTimeout, sbErrorMsg);
           
@@ -5304,6 +5303,18 @@ tempBarcodes.Add("90011-025-CC9");*/
       {
           CFG.READ_FONT RF = tConfig.tReading.eFont;
 
+          //string ExePath = System.Windows.Forms.Application.ExecutablePath;
+          //if (Path.GetDirectoryName(ExePath).EndsWith("\\"))
+          //{
+          //    ExePath = Path.GetDirectoryName(ExePath);
+          //}
+          //else
+          //{
+          //    ExePath = Path.GetDirectoryName(ExePath) + "\\";
+          //}
+
+          //string codelinePath = ExePath + "codeline.txt";
+    
 
           try
           {
@@ -5313,10 +5324,10 @@ tempBarcodes.Add("90011-025-CC9");*/
           {
               MessageBox.Show(
                                 "Cannot open file codeline.txt for writing",
-                                "Red Rose Scan-Solutions - MFS100",
+                                Settings.Default.messageBoxTitle,
                                  MessageBoxButtons.OK, MessageBoxIcon.Stop);
           }
-          tConfig.tReading.eFont = CFG.READ_FONT.E13B_MAGNETIC;
+          //tConfig.tReading.eFont = CFG.READ_FONT.E13B_MAGNETIC_AND_OPTICAL;
           uint temp_uiReadFont = ConvertFont(tConfig.tReading.eFont);
           iResult = Mfs100.ScanFeeder(PUB_iFeedMode, temp_uiReadFont,
                            tConfig.tFeeding.iTimeout, sbErrorMsg);
@@ -5344,21 +5355,21 @@ tempBarcodes.Add("90011-025-CC9");*/
 
       private void btnMICRtest_Click(object sender, EventArgs e)
       {
-          defaultSettingsForRedRose(ref tConfig);
+          defaultSettingsForRedRoseBatch(ref tConfig);
           MICR_Test_Form MTForm = new MICR_Test_Form(this);
           MTForm.Show();
       }
-      public void defaultSettingsForRedRose(ref CFG tConfig)
+      public void defaultSettingsForRedRoseBatch(ref CFG tConfig)
       {
           defaultCFG = tConfig;
           
           defaultCFG.tFeeding.eSource = CFG.FEED_SOURCE.RED_ROSE_BATCH;
           defaultCFG.tFeeding.bPipelineEnabled = true;
           defaultCFG.tFeeding.iTimeout = 5000;
-          defaultCFG.tFeeding.iDoublefeedThreshold = 70;
+          defaultCFG.tFeeding.iDoublefeedThreshold = 120;
           //
           defaultCFG.tReading.eFont = CFG.READ_FONT.E13B_MAGNETIC;
-          defaultCFG.tReading.eMicrBlanks = CFG.READ_BLANKMODE.NONE;
+          defaultCFG.tReading.eMicrBlanks = CFG.READ_BLANKMODE.NORMAL;
           defaultCFG.tReading.eOcrBlanks = CFG.READ_BLANKMODE.NONE;
           defaultCFG.tReading.eSortMode = CFG.READ_SORTMODE.NONE;
           //
@@ -5380,20 +5391,22 @@ tempBarcodes.Add("90011-025-CC9");*/
               Directory.CreateDirectory(@"C:\RedRose\Images");
           }
           defaultCFG.tScanning.sbImageDirectory = new StringBuilder();
-          defaultCFG.tScanning.sbImageDirectory.Insert(0, "C:\\RedRose\\Images\\");
+          defaultCFG.tScanning.sbImageDirectory.Insert(0, "C:\\RedRose\\Images");
           defaultCFG.tBarcode = BarcodeFormat.CODE_128;
           //
           defaultCFG.tScanning.tFrontSide1.sbFileName = new StringBuilder();
           defaultCFG.tScanning.tFrontSide1.sbFileName.Insert(0,"FS-1%04d");
           defaultCFG.tScanning.tFrontSide1.eFormat = IMAGE_FORMAT.BMP;
           defaultCFG.tScanning.tFrontSide1.iJpegQuality = 99;
-          defaultCFG.tScanning.tFrontSide1.eColor = CFG.IMAGE_COLOR.COLOR;
+          defaultCFG.tScanning.tFrontSide1.eColor = CFG.IMAGE_COLOR.RED;
           defaultCFG.tScanning.tFrontSide1.eDpi = CFG.IMAGE_DPI._200;
           defaultCFG.tScanning.tFrontSide1.bCut = true;
           //
           defaultCFG.tScanning.tFrontSide2.eFormat = IMAGE_FORMAT.NONE;
           defaultCFG.tScanning.tRearSide1.eFormat = IMAGE_FORMAT.NONE;
           defaultCFG.tScanning.tRearSide2.eFormat = IMAGE_FORMAT.NONE;
+          //
+
 
           tConfig = defaultCFG;
          

@@ -47,6 +47,7 @@
             this.order = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.barcode = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.value = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.micrCtrl = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.status = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.voucherBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgwValidateScreen)).BeginInit();
@@ -55,7 +56,7 @@
             // btnClear
             // 
             this.btnClear.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnClear.Location = new System.Drawing.Point(861, 91);
+            this.btnClear.Location = new System.Drawing.Point(935, 167);
             this.btnClear.Name = "btnClear";
             this.btnClear.Size = new System.Drawing.Size(138, 42);
             this.btnClear.TabIndex = 6;
@@ -66,7 +67,7 @@
             // btnValidate
             // 
             this.btnValidate.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnValidate.Location = new System.Drawing.Point(861, 310);
+            this.btnValidate.Location = new System.Drawing.Point(935, 386);
             this.btnValidate.Name = "btnValidate";
             this.btnValidate.Size = new System.Drawing.Size(138, 42);
             this.btnValidate.TabIndex = 7;
@@ -78,7 +79,7 @@
             // 
             this.lblStat.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lblStat.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblStat.Location = new System.Drawing.Point(821, 137);
+            this.lblStat.Location = new System.Drawing.Point(887, 212);
             this.lblStat.Name = "lblStat";
             this.lblStat.Size = new System.Drawing.Size(99, 68);
             this.lblStat.TabIndex = 10;
@@ -91,7 +92,7 @@
             this.lbStatistics.FormattingEnabled = true;
             this.lbStatistics.HorizontalScrollbar = true;
             this.lbStatistics.ItemHeight = 16;
-            this.lbStatistics.Location = new System.Drawing.Point(918, 136);
+            this.lbStatistics.Location = new System.Drawing.Point(992, 212);
             this.lbStatistics.Name = "lbStatistics";
             this.lbStatistics.Size = new System.Drawing.Size(81, 68);
             this.lbStatistics.TabIndex = 9;
@@ -100,7 +101,7 @@
             // 
             this.lblValue.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lblValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblValue.Location = new System.Drawing.Point(811, 224);
+            this.lblValue.Location = new System.Drawing.Point(877, 299);
             this.lblValue.Name = "lblValue";
             this.lblValue.Size = new System.Drawing.Size(109, 42);
             this.lblValue.TabIndex = 12;
@@ -110,7 +111,7 @@
             // btnStartReading
             // 
             this.btnStartReading.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnStartReading.Location = new System.Drawing.Point(861, 43);
+            this.btnStartReading.Location = new System.Drawing.Point(935, 119);
             this.btnStartReading.Name = "btnStartReading";
             this.btnStartReading.Size = new System.Drawing.Size(138, 42);
             this.btnStartReading.TabIndex = 13;
@@ -122,7 +123,7 @@
             // 
             this.lblVendorName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lblVendorName.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblVendorName.Location = new System.Drawing.Point(245, 26);
+            this.lblVendorName.Location = new System.Drawing.Point(203, 26);
             this.lblVendorName.Name = "lblVendorName";
             this.lblVendorName.Size = new System.Drawing.Size(272, 19);
             this.lblVendorName.TabIndex = 15;
@@ -132,7 +133,7 @@
             // btnSubmit
             // 
             this.btnSubmit.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSubmit.Location = new System.Drawing.Point(861, 358);
+            this.btnSubmit.Location = new System.Drawing.Point(935, 434);
             this.btnSubmit.Name = "btnSubmit";
             this.btnSubmit.Size = new System.Drawing.Size(138, 42);
             this.btnSubmit.TabIndex = 16;
@@ -149,19 +150,20 @@
             this.order,
             this.barcode,
             this.value,
+            this.micrCtrl,
             this.status});
             this.dgwValidateScreen.Location = new System.Drawing.Point(32, 55);
             this.dgwValidateScreen.Name = "dgwValidateScreen";
             this.dgwValidateScreen.ReadOnly = true;
             this.dgwValidateScreen.RowTemplate.ReadOnly = true;
             this.dgwValidateScreen.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgwValidateScreen.Size = new System.Drawing.Size(773, 433);
+            this.dgwValidateScreen.Size = new System.Drawing.Size(842, 680);
             this.dgwValidateScreen.TabIndex = 17;
             // 
             // btnClose
             // 
             this.btnClose.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnClose.Location = new System.Drawing.Point(861, 466);
+            this.btnClose.Location = new System.Drawing.Point(935, 542);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(138, 42);
             this.btnClose.TabIndex = 18;
@@ -181,7 +183,7 @@
             // 
             // btnDeleteSelected
             // 
-            this.btnDeleteSelected.Location = new System.Drawing.Point(701, 23);
+            this.btnDeleteSelected.Location = new System.Drawing.Point(770, 27);
             this.btnDeleteSelected.Name = "btnDeleteSelected";
             this.btnDeleteSelected.Size = new System.Drawing.Size(104, 23);
             this.btnDeleteSelected.TabIndex = 20;
@@ -201,7 +203,7 @@
             // 
             // tbTotalValue
             // 
-            this.tbTotalValue.Location = new System.Drawing.Point(918, 223);
+            this.tbTotalValue.Location = new System.Drawing.Point(992, 299);
             this.tbTotalValue.Name = "tbTotalValue";
             this.tbTotalValue.Size = new System.Drawing.Size(81, 20);
             this.tbTotalValue.TabIndex = 22;
@@ -211,6 +213,7 @@
             this.order.HeaderText = "Order";
             this.order.Name = "order";
             this.order.ReadOnly = true;
+            this.order.Width = 40;
             // 
             // barcode
             // 
@@ -224,6 +227,12 @@
             this.value.Name = "value";
             this.value.ReadOnly = true;
             // 
+            // micrCtrl
+            // 
+            this.micrCtrl.HeaderText = "MICR Control";
+            this.micrCtrl.Name = "micrCtrl";
+            this.micrCtrl.ReadOnly = true;
+            // 
             // status
             // 
             this.status.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
@@ -236,7 +245,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.ClientSize = new System.Drawing.Size(1021, 548);
+            this.ClientSize = new System.Drawing.Size(1109, 769);
             this.Controls.Add(this.tbTotalValue);
             this.Controls.Add(this.btnDeselectAll);
             this.Controls.Add(this.btnDeleteSelected);
@@ -280,6 +289,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn order;
         private System.Windows.Forms.DataGridViewTextBoxColumn barcode;
         private System.Windows.Forms.DataGridViewTextBoxColumn value;
+        private System.Windows.Forms.DataGridViewTextBoxColumn micrCtrl;
         private System.Windows.Forms.DataGridViewTextBoxColumn status;
     }
 }

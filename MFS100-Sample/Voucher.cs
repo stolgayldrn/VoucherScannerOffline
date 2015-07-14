@@ -26,6 +26,7 @@ namespace RedRose_VoucherScanner
         public string errorMessage;
         public string value;
         public string unitType;
+        public string MICR_status;
     }
 
     public class voucherStatistics
