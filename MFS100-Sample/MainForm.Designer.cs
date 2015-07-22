@@ -291,7 +291,7 @@
             // 
             // btnMICRtest
             // 
-            this.btnMICRtest.BackColor = System.Drawing.Color.MediumBlue;
+            this.btnMICRtest.BackColor = System.Drawing.Color.SteelBlue;
             this.btnMICRtest.Enabled = false;
             this.btnMICRtest.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnMICRtest.ForeColor = System.Drawing.SystemColors.ControlLightLight;
@@ -320,10 +320,10 @@
             // 
             // btnExit2
             // 
-            this.btnExit2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
+            this.btnExit2.BackColor = System.Drawing.Color.SteelBlue;
             this.btnExit2.Enabled = false;
             this.btnExit2.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnExit2.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.btnExit2.ForeColor = System.Drawing.Color.White;
             this.btnExit2.Location = new System.Drawing.Point(300, 110);
             this.btnExit2.Name = "btnExit2";
             this.btnExit2.Size = new System.Drawing.Size(120, 60);
@@ -335,7 +335,7 @@
             // 
             // btnEjectReverse
             // 
-            this.btnEjectReverse.BackColor = System.Drawing.Color.MediumAquamarine;
+            this.btnEjectReverse.BackColor = System.Drawing.Color.YellowGreen;
             this.btnEjectReverse.Enabled = false;
             this.btnEjectReverse.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnEjectReverse.Location = new System.Drawing.Point(160, 110);
@@ -349,7 +349,7 @@
             // 
             // btnEjectForward
             // 
-            this.btnEjectForward.BackColor = System.Drawing.Color.MediumTurquoise;
+            this.btnEjectForward.BackColor = System.Drawing.Color.YellowGreen;
             this.btnEjectForward.Enabled = false;
             this.btnEjectForward.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnEjectForward.Location = new System.Drawing.Point(20, 110);
@@ -363,7 +363,7 @@
             // 
             // btnInfo
             // 
-            this.btnInfo.BackColor = System.Drawing.Color.MediumAquamarine;
+            this.btnInfo.BackColor = System.Drawing.Color.YellowGreen;
             this.btnInfo.Enabled = false;
             this.btnInfo.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnInfo.Location = new System.Drawing.Point(160, 30);
@@ -377,10 +377,10 @@
             // 
             // btnStart
             // 
-            this.btnStart.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
+            this.btnStart.BackColor = System.Drawing.Color.SteelBlue;
             this.btnStart.Enabled = false;
             this.btnStart.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnStart.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.btnStart.ForeColor = System.Drawing.Color.White;
             this.btnStart.Location = new System.Drawing.Point(20, 30);
             this.btnStart.Name = "btnStart";
             this.btnStart.Size = new System.Drawing.Size(120, 60);
@@ -432,10 +432,10 @@
             // 
             // btnOptions
             // 
-            this.btnOptions.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
+            this.btnOptions.BackColor = System.Drawing.Color.SteelBlue;
             this.btnOptions.Enabled = false;
             this.btnOptions.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnOptions.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.btnOptions.ForeColor = System.Drawing.Color.White;
             this.btnOptions.Location = new System.Drawing.Point(300, 30);
             this.btnOptions.Name = "btnOptions";
             this.btnOptions.Size = new System.Drawing.Size(120, 60);
@@ -486,7 +486,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.Teal;
+            this.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.ClientSize = new System.Drawing.Size(1034, 716);
             this.Controls.Add(this.gbStatus);
             this.Controls.Add(this.gbCommands);

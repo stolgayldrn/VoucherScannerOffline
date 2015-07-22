@@ -39,16 +39,16 @@
             this.lblVendorName = new System.Windows.Forms.Label();
             this.btnSubmit = new System.Windows.Forms.Button();
             this.dgwValidateScreen = new System.Windows.Forms.DataGridView();
-            this.btnClose = new System.Windows.Forms.Button();
-            this.btnSelectAll = new System.Windows.Forms.Button();
-            this.btnDeleteSelected = new System.Windows.Forms.Button();
-            this.btnDeselectAll = new System.Windows.Forms.Button();
-            this.tbTotalValue = new System.Windows.Forms.TextBox();
             this.order = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.barcode = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.value = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.micrCtrl = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.status = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.btnClose = new System.Windows.Forms.Button();
+            this.btnSelectAll = new System.Windows.Forms.Button();
+            this.btnDeleteSelected = new System.Windows.Forms.Button();
+            this.btnDeselectAll = new System.Windows.Forms.Button();
+            this.tbTotalValue = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.voucherBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgwValidateScreen)).BeginInit();
             this.SuspendLayout();
@@ -160,6 +160,38 @@
             this.dgwValidateScreen.Size = new System.Drawing.Size(842, 680);
             this.dgwValidateScreen.TabIndex = 17;
             // 
+            // order
+            // 
+            this.order.HeaderText = "Order";
+            this.order.Name = "order";
+            this.order.ReadOnly = true;
+            this.order.Width = 40;
+            // 
+            // barcode
+            // 
+            this.barcode.HeaderText = "Barcode";
+            this.barcode.Name = "barcode";
+            this.barcode.ReadOnly = true;
+            // 
+            // value
+            // 
+            this.value.HeaderText = "Value";
+            this.value.Name = "value";
+            this.value.ReadOnly = true;
+            // 
+            // micrCtrl
+            // 
+            this.micrCtrl.HeaderText = "MICR Control";
+            this.micrCtrl.Name = "micrCtrl";
+            this.micrCtrl.ReadOnly = true;
+            // 
+            // status
+            // 
+            this.status.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.status.HeaderText = "Status";
+            this.status.Name = "status";
+            this.status.ReadOnly = true;
+            // 
             // btnClose
             // 
             this.btnClose.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -207,38 +239,6 @@
             this.tbTotalValue.Name = "tbTotalValue";
             this.tbTotalValue.Size = new System.Drawing.Size(81, 20);
             this.tbTotalValue.TabIndex = 22;
-            // 
-            // order
-            // 
-            this.order.HeaderText = "Order";
-            this.order.Name = "order";
-            this.order.ReadOnly = true;
-            this.order.Width = 40;
-            // 
-            // barcode
-            // 
-            this.barcode.HeaderText = "Barcode";
-            this.barcode.Name = "barcode";
-            this.barcode.ReadOnly = true;
-            // 
-            // value
-            // 
-            this.value.HeaderText = "Value";
-            this.value.Name = "value";
-            this.value.ReadOnly = true;
-            // 
-            // micrCtrl
-            // 
-            this.micrCtrl.HeaderText = "MICR Control";
-            this.micrCtrl.Name = "micrCtrl";
-            this.micrCtrl.ReadOnly = true;
-            // 
-            // status
-            // 
-            this.status.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.status.HeaderText = "Status";
-            this.status.Name = "status";
-            this.status.ReadOnly = true;
             // 
             // ValidForm
             // 

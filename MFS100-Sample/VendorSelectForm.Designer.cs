@@ -48,6 +48,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
             this.label1.Location = new System.Drawing.Point(29, 24);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(335, 20);
@@ -70,7 +71,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.BackColor = System.Drawing.Color.Maroon;
             this.ClientSize = new System.Drawing.Size(394, 178);
             this.Controls.Add(this.cbVendorList);
             this.Controls.Add(this.label1);
