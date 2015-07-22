@@ -5398,7 +5398,7 @@ tempBarcodes.Add("90011-025-CC9");*/
           defaultCFG.tScanning.tFrontSide1.sbFileName.Insert(0,"FS-1%04d");
           defaultCFG.tScanning.tFrontSide1.eFormat = IMAGE_FORMAT.BMP;
           defaultCFG.tScanning.tFrontSide1.iJpegQuality = 99;
-          defaultCFG.tScanning.tFrontSide1.eColor = CFG.IMAGE_COLOR.RED;
+          defaultCFG.tScanning.tFrontSide1.eColor = CFG.IMAGE_COLOR.BLUE;
           defaultCFG.tScanning.tFrontSide1.eDpi = CFG.IMAGE_DPI._200;
           defaultCFG.tScanning.tFrontSide1.bCut = true;
           //
