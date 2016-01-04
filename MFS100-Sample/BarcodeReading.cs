@@ -19,7 +19,7 @@ namespace RedRose_VoucherScanner
     public partial class BarcodeReading : Form
     {
         IBarcodeReader reader = new BarcodeReader();
-        List<BarcodeFormat> barcodeReaderPosFormats = new List<BarcodeFormat> { BarcodeFormat.CODE_128};
+        List<BarcodeFormat> barcodeReaderPosFormats = new List<BarcodeFormat> { BarcodeFormat.CODE_128, BarcodeFormat.DATA_MATRIX};
 
         //BarcodeFormat br_Tbarcode;
         CFG br_Tconfig;

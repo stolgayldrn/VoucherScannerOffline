@@ -198,7 +198,9 @@
     <EmbeddedResource Include="VendorSelectForm.resx">
       <DependentUpon>VendorSelectForm.cs</DependentUpon>
     </EmbeddedResource>
-    <None Include="app.config" />
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\DataSources\Voucher.datasource" />
     <None Include="Properties\Settings.settings">
