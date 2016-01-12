@@ -92,12 +92,25 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ICSharpCode.SharpZipLib">
+      <HintPath>..\..\NPOI\dotnet4\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
+    <Reference Include="libzbar-cil, Version=0.10.5848.24545, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>.\libzbar-cil.dll</HintPath>
+    </Reference>
     <Reference Include="MFS100DN, Version=1.0.4647.24168, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>.\MFS100DN.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net35\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI">
+      <HintPath>..\..\NPOI\dotnet4\NPOI.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI.OOXML">
+      <HintPath>..\..\NPOI\dotnet4\NPOI.OOXML.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -119,12 +132,6 @@
     </Compile>
     <Compile Include="Cfg.cs" />
     <Compile Include="helpers.cs" />
-    <Compile Include="Login.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Login.designer.cs">
-      <DependentUpon>Login.cs</DependentUpon>
-    </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -158,16 +165,7 @@
     <Compile Include="ValidForm.Designer.cs">
       <DependentUpon>ValidForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="VendorSelectForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="VendorSelectForm.Designer.cs">
-      <DependentUpon>VendorSelectForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="Voucher.cs" />
-    <EmbeddedResource Include="Login.resx">
-      <DependentUpon>Login.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -194,9 +192,6 @@
     </Compile>
     <EmbeddedResource Include="ValidForm.resx">
       <DependentUpon>ValidForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="VendorSelectForm.resx">
-      <DependentUpon>VendorSelectForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.config">
       <SubType>Designer</SubType>

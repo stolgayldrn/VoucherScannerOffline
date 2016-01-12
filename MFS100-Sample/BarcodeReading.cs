@@ -13,6 +13,7 @@ using System.Threading;
 using System.IO;
 //using BarcodeLib.BarcodeReader;
 using ZXing;
+using ZBar;
 
 namespace RedRose_VoucherScanner
 {
@@ -27,11 +28,10 @@ namespace RedRose_VoucherScanner
        
         public string[] br_myBarcode = null;
         private List<string> br_myBarcodeList = new List<string>();
+        private List<string> br_myImageList = new List<string>();
         //public BarcodeReading(ref CFG myTconfig, MFS100DN myMFS100, ref ValidForm myVS, ref statParams mySP)
         public BarcodeReading(ref MainForm MF, MFS100DN myMFS100)
         {
-           
-            
             br_Tconfig = MF.tConfig;
             br_Mfs100 = myMFS100;
             //br_Tbarcode = br_Tconfig.tBarcode;
@@ -41,7 +41,7 @@ namespace RedRose_VoucherScanner
 
             DirectoryInfo directory = new DirectoryInfo(br_Tconfig.tScanning.sbImageDirectory.ToString());
             //Clean the directory
-            Empty(directory);
+            //Empty(directory);
 
             FileSystemWatcher watcher = new FileSystemWatcher();
             watcher.Path = br_Tconfig.tScanning.sbImageDirectory.ToString();
@@ -73,15 +73,20 @@ namespace RedRose_VoucherScanner
             watcher.Changed += new FileSystemEventHandler(OnChanged);
             watcher.EnableRaisingEvents = true;           
             watcher.Created += new FileSystemEventHandler(OnChanged);
-
+            
             //string[] filePaths = Directory.GetFiles(@"C:\Users\m.alsadi\Desktop\MFS_outs\", "*.jpg");
         }
+
 
         public string[] getMyBarcode()
         {
             return br_myBarcode; 
         }
 
+        public List<string> getMyImageList()
+        {
+            return br_myImageList;
+        }
         public List<string> getMyBarcodeList()
         {
             return br_myBarcodeList;
@@ -103,7 +108,9 @@ namespace RedRose_VoucherScanner
 
 
                 //using ZXing;
-                string barcode = getBarcode(new Bitmap(imgFileName));
+                //string barcode = getBarcode(new Bitmap(imgFileName));
+                string barcode = GetBarcode_ZBAR(imgFileName);
+                br_myImageList.Add(imgFileName);
                 if(barcode == "")
                     br_myBarcodeList.Add("No barcode");
                 else
@@ -139,6 +146,27 @@ namespace RedRose_VoucherScanner
 
             }
            
+        }
+
+        public static string GetBarcode_ZBAR(string fileName)
+        {
+            string text;
+            using (var img = new Bitmap(fileName))
+            {
+                text = "";
+                if (img.Width > 0 && img.Height > 0)
+                {
+                    System.Drawing.Image oBitmap = System.Drawing.Image.FromFile(fileName);
+                    ImageScanner oImageScanner = new ImageScanner();
+                    var symbols = oImageScanner.Scan(oBitmap);
+                    if (symbols.Count > 0)
+                    {
+                        text = symbols[0].ToString();
+                        text = text.Substring(8);
+                    }
+                }
+            }
+            return text;
         }
 
         private string getBarcode(Bitmap img)

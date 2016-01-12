@@ -23,8 +23,6 @@ namespace RedRose_VoucherScanner
     public  class ValidationResult
     {
         public string barcode;
-        public string errorMessage;
-        public string value;
         public string unitType;
         public string MICR_status;
     }

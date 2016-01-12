@@ -12,6 +12,7 @@ using ZXing;
 using System.Threading;
 using System.IO;
 using RedRose_VoucherScanner.Properties;
+using ZBar;
 //using OnBarcode.Barcode.BarcodeScanner;
 //using BarcodeLib.BarcodeReader;
 
@@ -54,6 +55,7 @@ namespace RedRose_VoucherScanner
       public CFG defaultCFG = new CFG();
       private string username;
       private string password;
+      public string mainFolderPath;
 
       public string Username
       {
@@ -151,7 +153,7 @@ namespace RedRose_VoucherScanner
 
          InitializeComponent();
          // Get application path
-         
+        
          szPath = System.IO.Path.GetDirectoryName(System.Reflection.
                                   Assembly.GetExecutingAssembly().Location);
          sbConfigFileName.Length = 0;
@@ -448,9 +450,9 @@ namespace RedRose_VoucherScanner
          btnExit2.Enabled = true;
          btnExit2.Visible = true;
          btnExit2.Show();
-         btnMICRtest.Enabled = true;
-         btnMICRtest.Visible = true;
-         btnMICRtest.Show();
+         btnMICRtest.Enabled = false;
+         btnMICRtest.Visible = false;
+         btnMICRtest.Hide();
 
          // Read configuration from file
          ReadConfiguration(tConfig);
@@ -571,6 +573,7 @@ namespace RedRose_VoucherScanner
       {
          bool  bSortByScanAndEject;
          bool  bErrorsFound;
+         bool folderPathExist = false;
          int  iFeedMode;
          int  iCounter;
          int  iPosOfSeperator;
@@ -587,6 +590,22 @@ namespace RedRose_VoucherScanner
          System.IO.FileStream  structFileStream;
          System.IO.StreamWriter  swFile = null;
 
+         try
+         {
+             FolderBrowserDialog fbd = new FolderBrowserDialog();
+             DialogResult result = fbd.ShowDialog();
+             if (result == DialogResult.OK)
+             {
+                 mainFolderPath = fbd.SelectedPath;
+                 folderPathExist = true;
+             }
+         }
+          catch (Exception)
+          {
+              
+              throw;
+          }
+         
 
          // Initialize regular expressions
 
@@ -1045,12 +1064,19 @@ namespace RedRose_VoucherScanner
                 PUB_sbValue = sbValue;
                 defaultSettingsForRedRoseBatch(ref tConfig);               
                 StoreConfiguration(tConfig);
-
-                Vendor selectedVendor = new Vendor();
-                /// Vendor Select Form is created
-                VendorSelectForm vsf = new VendorSelectForm(this);
-                vsf.Show();
-                selectedVendor = vsf.getSelectedVendor();
+                Vendor goalV = new Vendor();
+                goalV.id = "Voucher";
+                goalV.shopName = "Reader";
+                
+                
+                new ValidForm(this, goalV).Show();
+                //this.Close();
+                
+                //Vendor selectedVendor = new Vendor();
+                // Vendor Select Form is created
+                //VendorSelectForm vsf = new VendorSelectForm(this);
+                //vsf.Show();
+                //selectedVendor = vsf.getSelectedVendor();
                 // Temp valid form
                 //new ValidForm(this, new Vendor()
                 //{
@@ -5008,32 +5034,7 @@ namespace RedRose_VoucherScanner
 
       }
 
-      public void UserAuthorization()
-      {
-         DialogResult drResult;
-         bool bValid = false;
-         // Create setup class
-         Login loginFrm = new Login();
-         // Do until configuration is valid
-         do
-         {
-             // Show setup dialog
-             drResult = loginFrm.ShowDialog();
-             // if setup was canceled
-             if (drResult == DialogResult.OK)
-             {
-                 // Do not validate and store configuration                 
-                 if (loginFrm.authorizedUser)
-                     bValid = true;
-             }
-             if (drResult == DialogResult.Cancel)
-             {
-                 Application.Exit();
-             }
-
-         } while (bValid != true);
-         
-      }
+      
 
       private void statisticsItemsUpdateAndShow(statParams mySP, ValidForm myVF)
       {
@@ -5383,20 +5384,25 @@ tempBarcodes.Add("90011-025-CC9");*/
           if (Directory.Exists(@"C:\RedRose"))
           {
               if (!Directory.Exists(@"C:\RedRose\Images"))
-                  Directory.CreateDirectory(@"C:\RedRose\Images");              
+                  Directory.CreateDirectory(@"C:\RedRose\Images");
           }
           else
           {
               Directory.CreateDirectory(@"C:\RedRose");
               Directory.CreateDirectory(@"C:\RedRose\Images");
           }
+          DirectoryInfo directory = new DirectoryInfo(@"C:\RedRose\Images");
+          //Clean the directory
+          Empty(directory);
+
           defaultCFG.tScanning.sbImageDirectory = new StringBuilder();
-          defaultCFG.tScanning.sbImageDirectory.Insert(0, "C:\\RedRose\\Images");
+          string foldPath = "C:\\RedRose\\Images";
+          defaultCFG.tScanning.sbImageDirectory.Insert(0, value: foldPath);
           defaultCFG.tBarcode = BarcodeFormat.CODE_128;
           //
           defaultCFG.tScanning.tFrontSide1.sbFileName = new StringBuilder();
           defaultCFG.tScanning.tFrontSide1.sbFileName.Insert(0,"FS-1%04d");
-          defaultCFG.tScanning.tFrontSide1.eFormat = IMAGE_FORMAT.BMP;
+          defaultCFG.tScanning.tFrontSide1.eFormat = IMAGE_FORMAT.JPEG;
           defaultCFG.tScanning.tFrontSide1.iJpegQuality = 99;
           defaultCFG.tScanning.tFrontSide1.eColor = CFG.IMAGE_COLOR.BLUE;
           defaultCFG.tScanning.tFrontSide1.eDpi = CFG.IMAGE_DPI._200;
@@ -5411,6 +5417,23 @@ tempBarcodes.Add("90011-025-CC9");*/
           tConfig = defaultCFG;
          
  
+      }
+
+      public void Empty(DirectoryInfo directory)
+      {
+          try
+          {
+              foreach (System.IO.FileInfo file in directory.GetFiles()) file.Delete();
+              foreach (System.IO.DirectoryInfo subDirectory in directory.GetDirectories()) subDirectory.Delete(true);
+          }
+          catch (Exception ex)
+          {
+              //MessageBox.Show(ex.ToString(), "Red Rose Scan-Solutions - MFS100", 
+              //  MessageBoxButtons.OK, MessageBoxIcon.Stop);
+              int error = 1;
+
+          }
+
       }
 
       public void setupFileNameCheck(ref CFG cfg)
