@@ -116,7 +116,7 @@ namespace RedRose_VoucherScanner
                 else
                     br_myBarcodeList.Add(barcode);
             }
-            catch(Exception ex)          
+            catch(Exception)          
             {
                 br_myBarcodeList.Add("No barcode");
                
@@ -138,11 +138,11 @@ namespace RedRose_VoucherScanner
                 foreach (System.IO.FileInfo file in directory.GetFiles()) file.Delete();
                 foreach (System.IO.DirectoryInfo subDirectory in directory.GetDirectories()) subDirectory.Delete(true);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 //MessageBox.Show(ex.ToString(), "Red Rose Scan-Solutions - MFS100", 
                   //  MessageBoxButtons.OK, MessageBoxIcon.Stop);
-                int error = 1;
+                //int error = 1;
 
             }
            

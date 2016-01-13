@@ -585,7 +585,6 @@ namespace RedRose_VoucherScanner
       {
          bool  bSortByScanAndEject;
          bool  bErrorsFound;
-         bool folderPathExist = false;
          int  iFeedMode;
          int  iCounter;
          int  iPosOfSeperator;
@@ -606,16 +605,15 @@ namespace RedRose_VoucherScanner
          {
              FolderBrowserDialog fbd = new FolderBrowserDialog();
              DialogResult result = fbd.ShowDialog();
-             if (result == DialogResult.OK)
-             {
-                 mainFolderPath = fbd.SelectedPath;
-                 folderPathExist = true;
-             }
+             mainFolderPath = (result == DialogResult.OK) ? fbd.SelectedPath : @"C:\RedRose\Images";
          }
-          catch (Exception)
+          catch (Exception ex)
           {
-              
-              throw;
+              // Show error message         
+              MessageBox.Show("Folder Browser Error: " + ex.ToString(), 
+                                  Settings.Default.messageBoxTitle,
+                                   MessageBoxButtons.OK, MessageBoxIcon.Stop);
+              throw ;
           }
          
 
@@ -5438,12 +5436,10 @@ tempBarcodes.Add("90011-025-CC9");*/
               foreach (System.IO.FileInfo file in directory.GetFiles()) file.Delete();
               foreach (System.IO.DirectoryInfo subDirectory in directory.GetDirectories()) subDirectory.Delete(true);
           }
-          catch (Exception ex)
+          catch (Exception)
           {
               //MessageBox.Show(ex.ToString(), "Red Rose Scan-Solutions - MFS100", 
               //  MessageBoxButtons.OK, MessageBoxIcon.Stop);
-              int error = 1;
-
           }
 
       }

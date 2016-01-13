@@ -59,15 +59,16 @@ namespace RedRose_VoucherScanner
             btnClear.Enabled = false;
             btnClear.Visible = false;
             btnClear.Hide();
+
+            btnDuplicate.Enabled = false;
+            btnDuplicate.Visible = false;
+            btnDuplicate.Hide();
             
             btnSubmit.Enabled = false;
             btnSubmit.Visible = false;
             btnSubmit.Hide();
 
-            btnRead.Enabled = false;
-            btnRead.Visible = false;
-            btnRead.Hide();
-
+            
             lblVendorName.Text = selectedVendor.ToString();
             
         }
@@ -78,6 +79,10 @@ namespace RedRose_VoucherScanner
             btnClear.Enabled = false;
             btnClear.Visible = false;
             btnClear.Hide();
+
+            btnDuplicate.Enabled = false;
+            btnDuplicate.Visible = false;
+            btnDuplicate.Hide();
 
             btnStartReading.Enabled = true;
             btnStartReading.Visible = true;
@@ -100,7 +105,7 @@ namespace RedRose_VoucherScanner
 
         private void btnValidate_Click(object sender, EventArgs e)
         {
-            int totalValue = 0;
+            //int totalValue = 0;
             validated = true;
             //resultsPublic = resultsFake(this.barcodes);
             try
@@ -148,6 +153,10 @@ namespace RedRose_VoucherScanner
             btnClear.Enabled = false;
             btnClear.Visible = false;
             btnClear.Hide();
+
+            btnDuplicate.Enabled = false;
+            btnDuplicate.Visible = false;
+            btnDuplicate.Hide();
 
             btnSubmit.Enabled = false;
             btnSubmit.Visible = false;
@@ -207,6 +216,10 @@ namespace RedRose_VoucherScanner
             btnClear.Visible = true;
             btnClear.Show();
 
+            btnDuplicate.Enabled = true;
+            btnDuplicate.Visible = true;
+            btnDuplicate.Show();
+
             btnSubmit.Enabled = true;
             btnSubmit.Visible = true;
             btnSubmit.Show();
@@ -259,6 +272,10 @@ namespace RedRose_VoucherScanner
             btnClear.Enabled = true;
             btnClear.Visible = true;
             btnClear.Show();
+
+            btnDuplicate.Enabled = true;
+            btnDuplicate.Visible = true;
+            btnDuplicate.Show();
             
             ExportToXls(sender, e);
             MessageBox.Show("File is exported to:" + xlsPath);
@@ -271,13 +288,11 @@ namespace RedRose_VoucherScanner
                 foreach (System.IO.FileInfo file in directory.GetFiles()) file.Delete();
                 foreach (System.IO.DirectoryInfo subDirectory in directory.GetDirectories()) subDirectory.Delete(true);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 //MessageBox.Show(ex.ToString(), "Red Rose Scan-Solutions - MFS100", 
                 //  MessageBoxButtons.OK, MessageBoxIcon.Stop);
-                int error = 1;
-                int err = 2;
-
+                //int error = 1;
             }
 
         }

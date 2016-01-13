@@ -44,7 +44,7 @@
             this.btnSelectAll = new System.Windows.Forms.Button();
             this.btnDeleteSelected = new System.Windows.Forms.Button();
             this.btnDeselectAll = new System.Windows.Forms.Button();
-            this.btnRead = new System.Windows.Forms.Button();
+            this.btnDuplicate = new System.Windows.Forms.Button();
             this.cbScanImages = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.voucherBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgwValidateScreen)).BeginInit();
@@ -194,16 +194,17 @@
             this.btnDeselectAll.UseVisualStyleBackColor = true;
             this.btnDeselectAll.Click += new System.EventHandler(this.btnDeselectAll_Click);
             // 
-            // btnRead
+            // btnDuplicate
             // 
-            this.btnRead.Location = new System.Drawing.Point(484, 322);
-            this.btnRead.Name = "btnRead";
-            this.btnRead.Size = new System.Drawing.Size(75, 23);
-            this.btnRead.TabIndex = 23;
-            this.btnRead.Text = "Read";
-            this.btnRead.UseVisualStyleBackColor = true;
-            this.btnRead.Visible = false;
-            this.btnRead.Click += new System.EventHandler(this.button1_Click);
+            this.btnDuplicate.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F);
+            this.btnDuplicate.Location = new System.Drawing.Point(509, 328);
+            this.btnDuplicate.Name = "btnDuplicate";
+            this.btnDuplicate.Size = new System.Drawing.Size(147, 58);
+            this.btnDuplicate.TabIndex = 23;
+            this.btnDuplicate.Text = "Check Duplicate";
+            this.btnDuplicate.UseVisualStyleBackColor = true;
+            this.btnDuplicate.Visible = false;
+            this.btnDuplicate.Click += new System.EventHandler(this.button1_Click);
             // 
             // cbScanImages
             // 
@@ -224,7 +225,7 @@
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.ClientSize = new System.Drawing.Size(699, 769);
             this.Controls.Add(this.cbScanImages);
-            this.Controls.Add(this.btnRead);
+            this.Controls.Add(this.btnDuplicate);
             this.Controls.Add(this.btnDeselectAll);
             this.Controls.Add(this.btnDeleteSelected);
             this.Controls.Add(this.btnSelectAll);
@@ -259,7 +260,7 @@
         private System.Windows.Forms.Button btnSelectAll;
         private System.Windows.Forms.Button btnDeleteSelected;
         private System.Windows.Forms.Button btnDeselectAll;
-        private System.Windows.Forms.Button btnRead;
+        private System.Windows.Forms.Button btnDuplicate;
         private System.Windows.Forms.DataGridViewTextBoxColumn order;
         private System.Windows.Forms.DataGridViewTextBoxColumn barcode;
         private System.Windows.Forms.DataGridViewTextBoxColumn micrCtrl;
