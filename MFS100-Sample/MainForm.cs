@@ -396,6 +396,18 @@ namespace RedRose_VoucherScanner
 
       private void btnLaunch_Click(object sender, EventArgs e)
       {
+          if (Directory.Exists(@"C:\RedRose"))
+          {
+              if (!Directory.Exists(@"C:\RedRose\Images"))
+                  Directory.CreateDirectory(@"C:\RedRose\Images");
+          }
+          else
+          {
+              Directory.CreateDirectory(@"C:\RedRose");
+              Directory.CreateDirectory(@"C:\RedRose\Images");
+          }
+
+          /*********/
          bool  bValid;
          int  iValue = 0;
 
