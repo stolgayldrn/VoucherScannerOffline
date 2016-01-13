@@ -91,6 +91,9 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="ICSharpCode.SharpZipLib">
       <HintPath>..\..\NPOI\dotnet4\ICSharpCode.SharpZipLib.dll</HintPath>
@@ -196,6 +199,7 @@
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>
+    <None Include="app.manifest" />
     <None Include="packages.config" />
     <None Include="Properties\DataSources\Voucher.datasource" />
     <None Include="Properties\Settings.settings">

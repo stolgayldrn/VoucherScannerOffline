@@ -112,7 +112,7 @@
             this.btnSubmit.Name = "btnSubmit";
             this.btnSubmit.Size = new System.Drawing.Size(147, 42);
             this.btnSubmit.TabIndex = 16;
-            this.btnSubmit.Text = "&Save";
+            this.btnSubmit.Text = "&Export XLS";
             this.btnSubmit.UseVisualStyleBackColor = true;
             this.btnSubmit.Click += new System.EventHandler(this.btnSubmit_Click);
             // 
