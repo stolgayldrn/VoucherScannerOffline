@@ -124,6 +124,12 @@ namespace RedRose_VoucherScanner
 
         }
 
+        public void readBarcodeFromList(string imgFileName, string returnCode)
+        {
+            string barcode = GetBarcode_ZBAR(imgFileName);
+            returnCode = barcode == "" ? "No barcode" : barcode;
+        }
+
         public void setupFileNameCheck(ref CFG cfg)
         {            
             if (cfg.tScanning.tFrontSide1.sbFileName.ToString() == "")

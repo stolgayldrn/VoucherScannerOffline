@@ -18,6 +18,7 @@ namespace RedRose_VoucherScanner
         public int invCnt= 0;
         public int totalValue = 0;
         public int reusedCnt = 0;
+        public int duplicateCnt = 0;
     }
 
     public  class ValidationResult

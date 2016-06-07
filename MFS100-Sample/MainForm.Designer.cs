@@ -28,6 +28,7 @@
       /// </summary>
       private void InitializeComponent()
       {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.tbStatus = new System.Windows.Forms.TextBox();
             this.pbA4Doublefeed = new System.Windows.Forms.PictureBox();
             this.lblA4Doublefeed = new System.Windows.Forms.Label();
@@ -48,6 +49,7 @@
             this.pbFeeder = new System.Windows.Forms.PictureBox();
             this.lblFeeder = new System.Windows.Forms.Label();
             this.gbStatus = new System.Windows.Forms.GroupBox();
+            this.btnMICRtest = new System.Windows.Forms.Button();
             this.btnSetup = new System.Windows.Forms.Button();
             this.btnExit2 = new System.Windows.Forms.Button();
             this.btnEjectReverse = new System.Windows.Forms.Button();
@@ -62,7 +64,6 @@
             this.lblEvents = new System.Windows.Forms.Label();
             this.pbImage = new System.Windows.Forms.PictureBox();
             this.lblImage = new System.Windows.Forms.Label();
-            this.btnMICRtest = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pbA4Doublefeed)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbA4Start)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbA4Feeder)).BeginInit();
@@ -289,6 +290,21 @@
             this.gbStatus.TabStop = false;
             this.gbStatus.Text = "Status";
             // 
+            // btnMICRtest
+            // 
+            this.btnMICRtest.BackColor = System.Drawing.Color.SteelBlue;
+            this.btnMICRtest.Enabled = false;
+            this.btnMICRtest.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnMICRtest.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.btnMICRtest.Location = new System.Drawing.Point(20, 110);
+            this.btnMICRtest.Name = "btnMICRtest";
+            this.btnMICRtest.Size = new System.Drawing.Size(250, 32);
+            this.btnMICRtest.TabIndex = 19;
+            this.btnMICRtest.Text = "&MICR Test Mode";
+            this.btnMICRtest.UseVisualStyleBackColor = false;
+            this.btnMICRtest.Visible = false;
+            this.btnMICRtest.Click += new System.EventHandler(this.btnMICRtest_Click);
+            // 
             // btnSetup
             // 
             this.btnSetup.BackColor = System.Drawing.Color.Teal;
@@ -467,21 +483,6 @@
             this.lblImage.TabIndex = 0;
             this.lblImage.Text = "Image (click to change side):";
             // 
-            // btnMICRtest
-            // 
-            this.btnMICRtest.BackColor = System.Drawing.Color.SteelBlue;
-            this.btnMICRtest.Enabled = false;
-            this.btnMICRtest.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnMICRtest.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.btnMICRtest.Location = new System.Drawing.Point(20, 110);
-            this.btnMICRtest.Name = "btnMICRtest";
-            this.btnMICRtest.Size = new System.Drawing.Size(250, 32);
-            this.btnMICRtest.TabIndex = 19;
-            this.btnMICRtest.Text = "&MICR Test Mode";
-            this.btnMICRtest.UseVisualStyleBackColor = false;
-            this.btnMICRtest.Visible = false;
-            this.btnMICRtest.Click += new System.EventHandler(this.btnMICRtest_Click);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -495,6 +496,7 @@
             this.Controls.Add(this.pbImage);
             this.Controls.Add(this.lblImage);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "MainForm";
             this.Text = "RedRose Voucher Scanner";

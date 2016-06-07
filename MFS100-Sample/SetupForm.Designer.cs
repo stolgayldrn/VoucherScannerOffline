@@ -28,6 +28,7 @@
       /// </summary>
       private void InitializeComponent()
       {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SetupForm));
             this.btnCancel = new System.Windows.Forms.Button();
             this.chkbRearSideImage2CutDoc = new System.Windows.Forms.CheckBox();
             this.cbRearSideImage2Dpi = new System.Windows.Forms.ComboBox();
@@ -1294,6 +1295,7 @@
             this.Controls.Add(this.gbReading);
             this.Controls.Add(this.gbFeeding);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "SetupForm";
             this.Text = "Setup MFS100";

@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ValidForm));
             this.btnClear = new System.Windows.Forms.Button();
             this.lblStat = new System.Windows.Forms.Label();
             this.lbStatistics = new System.Windows.Forms.ListBox();
@@ -46,6 +47,7 @@
             this.btnDeselectAll = new System.Windows.Forms.Button();
             this.btnDuplicate = new System.Windows.Forms.Button();
             this.cbScanImages = new System.Windows.Forms.CheckBox();
+            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.voucherBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgwValidateScreen)).BeginInit();
             this.SuspendLayout();
@@ -67,9 +69,9 @@
             this.lblStat.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblStat.Location = new System.Drawing.Point(460, 211);
             this.lblStat.Name = "lblStat";
-            this.lblStat.Size = new System.Drawing.Size(99, 68);
+            this.lblStat.Size = new System.Drawing.Size(99, 86);
             this.lblStat.TabIndex = 10;
-            this.lblStat.Text = "Proccessed:\r\n           Valid:\r\n        Invalid:\r\n       Reused:";
+            this.lblStat.Text = "Proccessed:\r\n           Valid:\r\n        Invalid:\r\n       Reused:\r\nDuplicate:";
             this.lblStat.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // lbStatistics
@@ -80,7 +82,7 @@
             this.lbStatistics.ItemHeight = 16;
             this.lbStatistics.Location = new System.Drawing.Point(566, 211);
             this.lbStatistics.Name = "lbStatistics";
-            this.lbStatistics.Size = new System.Drawing.Size(90, 68);
+            this.lbStatistics.Size = new System.Drawing.Size(90, 84);
             this.lbStatistics.TabIndex = 9;
             // 
             // btnStartReading
@@ -108,9 +110,9 @@
             // btnSubmit
             // 
             this.btnSubmit.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSubmit.Location = new System.Drawing.Point(509, 433);
+            this.btnSubmit.Location = new System.Drawing.Point(509, 403);
             this.btnSubmit.Name = "btnSubmit";
-            this.btnSubmit.Size = new System.Drawing.Size(147, 42);
+            this.btnSubmit.Size = new System.Drawing.Size(147, 57);
             this.btnSubmit.TabIndex = 16;
             this.btnSubmit.Text = "&Export XLS";
             this.btnSubmit.UseVisualStyleBackColor = true;
@@ -155,13 +157,14 @@
             // 
             // btnClose
             // 
+            this.btnClose.BackColor = System.Drawing.Color.Maroon;
             this.btnClose.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnClose.Location = new System.Drawing.Point(509, 541);
+            this.btnClose.Location = new System.Drawing.Point(509, 606);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(147, 42);
             this.btnClose.TabIndex = 18;
             this.btnClose.Text = "&Exit";
-            this.btnClose.UseVisualStyleBackColor = true;
+            this.btnClose.UseVisualStyleBackColor = false;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
             // btnSelectAll
@@ -176,12 +179,14 @@
             // 
             // btnDeleteSelected
             // 
+            this.btnDeleteSelected.BackColor = System.Drawing.Color.DarkRed;
+            this.btnDeleteSelected.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
             this.btnDeleteSelected.Location = new System.Drawing.Point(314, 26);
             this.btnDeleteSelected.Name = "btnDeleteSelected";
             this.btnDeleteSelected.Size = new System.Drawing.Size(104, 23);
             this.btnDeleteSelected.TabIndex = 20;
             this.btnDeleteSelected.Text = "Delete Selected";
-            this.btnDeleteSelected.UseVisualStyleBackColor = true;
+            this.btnDeleteSelected.UseVisualStyleBackColor = false;
             this.btnDeleteSelected.Click += new System.EventHandler(this.btnDeleteSelected_Click);
             // 
             // btnDeselectAll
@@ -204,19 +209,31 @@
             this.btnDuplicate.Text = "Check Duplicate";
             this.btnDuplicate.UseVisualStyleBackColor = true;
             this.btnDuplicate.Visible = false;
-            this.btnDuplicate.Click += new System.EventHandler(this.button1_Click);
+            this.btnDuplicate.Click += new System.EventHandler(this.btnDuplicate_Click);
             // 
             // cbScanImages
             // 
             this.cbScanImages.AutoSize = true;
             this.cbScanImages.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F);
-            this.cbScanImages.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.cbScanImages.Location = new System.Drawing.Point(436, 52);
+            this.cbScanImages.ForeColor = System.Drawing.Color.Blue;
+            this.cbScanImages.Location = new System.Drawing.Point(509, 66);
             this.cbScanImages.Name = "cbScanImages";
-            this.cbScanImages.Size = new System.Drawing.Size(251, 28);
+            this.cbScanImages.Size = new System.Drawing.Size(137, 28);
             this.cbScanImages.TabIndex = 24;
-            this.cbScanImages.Text = "Save Images with Barcode";
+            this.cbScanImages.Text = "Save Images";
             this.cbScanImages.UseVisualStyleBackColor = true;
+            // 
+            // richTextBox1
+            // 
+            this.richTextBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.richTextBox1.ForeColor = System.Drawing.Color.Maroon;
+            this.richTextBox1.Location = new System.Drawing.Point(418, 475);
+            this.richTextBox1.Name = "richTextBox1";
+            this.richTextBox1.Size = new System.Drawing.Size(284, 125);
+            this.richTextBox1.TabIndex = 25;
+            this.richTextBox1.Text = "AFTER SCAN\n1. Check Duplicate: Dark(selected) are duplicated ones!\n2. Selected Vo" +
+    "uchers can be deleted with \"Delete Selected\" button.\n3. Export to XLS (if an exc" +
+    "el file is chosen, write below).";
             // 
             // ValidForm
             // 
@@ -224,6 +241,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.ClientSize = new System.Drawing.Size(699, 769);
+            this.Controls.Add(this.richTextBox1);
             this.Controls.Add(this.cbScanImages);
             this.Controls.Add(this.btnDuplicate);
             this.Controls.Add(this.btnDeselectAll);
@@ -237,6 +255,7 @@
             this.Controls.Add(this.lblStat);
             this.Controls.Add(this.lbStatistics);
             this.Controls.Add(this.btnClear);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "ValidForm";
             this.Text = "Voucher Reading Screen";
             ((System.ComponentModel.ISupportInitialize)(this.voucherBindingSource)).EndInit();
@@ -265,5 +284,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn barcode;
         private System.Windows.Forms.DataGridViewTextBoxColumn micrCtrl;
         private System.Windows.Forms.CheckBox cbScanImages;
+        private System.Windows.Forms.RichTextBox richTextBox1;
     }
 }

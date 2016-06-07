@@ -13,7 +13,9 @@ using System.Web.Configuration;
 using RedRose_VoucherScanner.Properties;
 using ListBox = System.Windows.Forms.ListBox;
 
-using NPOI.HSSF.Model; // InternalWorkbook
+using NPOI.HSSF.Model;
+using NPOI.HSSF.Record;
+// InternalWorkbook
 using NPOI.HSSF.UserModel; // HSSFWorkbook, HSSFSheet
 
 
@@ -34,7 +36,7 @@ namespace RedRose_VoucherScanner
         public List<string> rawImages = new List<string>();
         public List<string> MICR_status= new List<string>();
         private List<ValidationResult> tempResults;
-        public string xlsPath = "Test.xls";
+        public string xlsPath = "";
         HSSFWorkbook wb;
         HSSFSheet sh;
 
@@ -68,8 +70,25 @@ namespace RedRose_VoucherScanner
             btnSubmit.Visible = false;
             btnSubmit.Hide();
 
-            
+            parentMF.validFormIsOpen = true;
             lblVendorName.Text = selectedVendor.ToString();
+
+            // Create the ToolTip and associate with the Form container.
+            ToolTip toolTip1 = new ToolTip();
+
+            // Set up the delays for the ToolTip.
+            toolTip1.AutoPopDelay = 5000;
+            toolTip1.InitialDelay = 1000;
+            toolTip1.ReshowDelay = 500;
+            // Force the ToolTip text to be displayed whether or not the form is active.
+            toolTip1.ShowAlways = true;
+
+            // Set up the ToolTip text for the Button and Checkbox.
+            toolTip1.SetToolTip(this.btnDuplicate, "Compare scanned vouchers with existing vouchers at chosen excel file");
+            toolTip1.SetToolTip(this.btnSubmit, "Export scanned vouchers to excel file");
+            toolTip1.SetToolTip(this.btnClear, "Clear all information about scanned vouchers");
+            toolTip1.SetToolTip(this.btnClose, "Close the application");
+            toolTip1.SetToolTip(this.cbScanImages, "Save images of scanned vouchers to chosen folder");
             
         }
 
@@ -172,9 +191,18 @@ namespace RedRose_VoucherScanner
                 MessageBox.Show("Cannot open file codeline.txt for writing",
                                   Settings.Default.messageBoxTitle,MessageBoxButtons.OK, MessageBoxIcon.Stop);
             }
-            //Barcode reading thread starts
+            // 1. Barcode reading thread starts
             BarcodeReading barcodeRead1 = new BarcodeReading(ref parentMF ,parentMF.Mfs100);
-            parentMF.VoucherScanning(this);
+            // 2. Voucher Scanner 
+            try
+            {
+                parentMF.VoucherScanning(this);
+            }
+            catch
+            {
+                MessageBox.Show("Scaning Failed",
+                                  Settings.Default.messageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Stop);
+            }
             Thread.Sleep(500);
 
             List<string> rawBarcodesNew = barcodeRead1.getMyBarcodeList();
@@ -182,7 +210,24 @@ namespace RedRose_VoucherScanner
 
             List<string> rawImagesNew = barcodeRead1.getMyImageList();
             rawImages.AddRange(rawImagesNew);
-
+            ///////////////////////
+            // Double Check
+            //List<int> doubleCheckList=new List<int>();
+            //for (int i = 0; i < rawBarcodesNew.Count; i++)
+            //{
+            //    var vr = new ValidationResult();
+            //    vr.barcode = rawBarcodesNew[i];
+            //    SP.imgCnt++;
+            //    if (vr.barcode == "" || vr.barcode == "No barcode")
+            //        doubleCheckList.Add(i);
+            //}
+            //for (int i = 0; i < doubleCheckList.Count; i++)
+            //{
+            //    string fnDouble = rawImagesNew[doubleCheckList[i]];
+            //    string returnCode = "";
+            //    barcodeRead1.readBarcodeFromList(fnDouble, returnCode);
+            //}
+            ///////////////////////
             for (int i = 0; i < rawBarcodesNew.Count; i++)
             {
                 var vr = new ValidationResult();
@@ -258,12 +303,15 @@ namespace RedRose_VoucherScanner
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(@"Exception Occured while saving images " + ex.ToString());
+                    MessageBox.Show(@"Exception Occured while saving images " + ex.ToString(),Settings.Default.messageBoxTitle);
                 }
             }
             DirectoryInfo directory = new DirectoryInfo(@"C:\RedRose\Images");
             //Clean the directory
             Empty(directory);
+
+            if(ExportToXls(sender, e, parentMF.xlsSelected))
+            MessageBox.Show("File is exported to:" + xlsPath, Settings.Default.messageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             btnStartReading.Enabled = false;
             btnStartReading.Visible = false;
@@ -277,8 +325,7 @@ namespace RedRose_VoucherScanner
             btnDuplicate.Visible = true;
             btnDuplicate.Show();
             
-            ExportToXls(sender, e);
-            MessageBox.Show("File is exported to:" + xlsPath);
+          
         }
 
         public void Empty(DirectoryInfo directory)
@@ -438,6 +485,7 @@ namespace RedRose_VoucherScanner
             lbStatistics.Items.Add(mySP.validCnt.ToString());
             lbStatistics.Items.Add(mySP.invCnt.ToString());
             lbStatistics.Items.Add(mySP.reusedCnt.ToString());
+            lbStatistics.Items.Add(mySP.duplicateCnt.ToString());
             lbStatistics.Update();
         }
         private void MICR_control(List <string> barcodes, ref List< string> MICR_status)
@@ -446,12 +494,16 @@ namespace RedRose_VoucherScanner
             int i = 0;
             foreach (var line in lines)
             {
-                string barcode = barcodes[i];
-                if (barcode.Length > 11)
+                if (barcodes.Count > (i))
                 {
-                    barcode = barcode.Substring(0, 12);
-                    string MICR_code = line.ToString();
-                    MICR_status.Add(MICR_code.Length > 13 ? "Approved" : "No MICR code");
+                    string barcode = barcodes[i];
+                    if (barcode.Length > 11)
+                    {
+                        barcode = barcode.Substring(0, 12);
+                        string MICR_code = line.ToString();
+                        MICR_status.Add(MICR_code.Length > 13 ? "Approved" : "No MICR code");
+                    }
+                    else MICR_status.Add("No barcode");
                 }
                 else MICR_status.Add("No barcode");
                 i++;
@@ -469,7 +521,7 @@ namespace RedRose_VoucherScanner
             catch (Exception ex)
             {
                 obj = null;
-                MessageBox.Show("Exception Occured while releasing object " + ex.ToString());
+                MessageBox.Show("Exception Occured while releasing object " + ex.ToString(),Settings.Default.messageBoxTitle);
             }
             finally
             {
@@ -518,130 +570,232 @@ namespace RedRose_VoucherScanner
             }
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void btnDuplicate_Click(object sender, EventArgs e)
         {
-            xlsPath = parentMF.mainFolderPath + "\\Output.xls";
-            if (!File.Exists(xlsPath)) return;
-            
-            // create xls if not exists
-            using (var fs = new FileStream(xlsPath, FileMode.Open, FileAccess.Read))
+            if (!parentMF.xlsSelected)
             {
-                wb = new HSSFWorkbook(fs);
+                MessageBox.Show("Xls file not selected",Settings.Default.messageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                return;
             }
-            // get sheet
-            sh = (HSSFSheet)wb.GetSheet("Sheet1");
+            xlsPath = parentMF.xlsSelected ? parentMF.mainXlsPath : parentMF.mainFolderPath + "\\Outputs.xls";
+            xlsPath = parentMF.mainXlsPath;
+            List<string> prevBarcode = new List<string>();
+            if (!File.Exists(xlsPath)) return;
 
-            int i = 0;
-            while (sh.GetRow(i) != null)
+            try
             {
-                // add necessary columns
-                if (dgwValidateScreen.Columns.Count < sh.GetRow(i).Cells.Count)
+                // create xls if not exists
+                using (var fs = new FileStream(xlsPath, FileMode.Open, FileAccess.Read))
                 {
-                    for (int j = 0; j < sh.GetRow(i).Cells.Count; j++)
-                        dgwValidateScreen.Columns.Add("", "");
+                    wb = new HSSFWorkbook(fs);
                 }
-
-                // add row
-                dgwValidateScreen.Rows.Add();
-                // write row value
-                for (int j = 0; j < sh.GetRow(i).Cells.Count; j++)
+                // get sheet
+                sh = (HSSFSheet) wb.GetSheet("Sheet1");
+                int i = 1;
+                while (sh.GetRow(i) != null)
                 {
-                    var cell = sh.GetRow(i).GetCell(j);
-                    if (cell != null)
+                    var cell = sh.GetRow(i).GetCell(1);
+                    if (cell != null) prevBarcode.Add(cell.ToString());
+                    i++;
+                }
+                List<int> existBarList = new List<int>();
+                for (int j = 0; j < dgwValidateScreen.RowCount; j++)
+                {
+                    bool exist = false;
+                    string bar = dgwValidateScreen[1, j].Value.ToString();
+                    for (int k = 0; k < prevBarcode.Count; k++)
                     {
-                        // TODO: you can add more cell types capability, e. g. formula
-                        switch (cell.CellType)
+                        string temp = prevBarcode[k];
+                        exist = (bar == prevBarcode[k]) ? true : false;
+                        if (exist)
                         {
-                            case NPOI.SS.UserModel.CellType.Numeric:
-                                dgwValidateScreen[j, i].Value = sh.GetRow(i).GetCell(j).NumericCellValue;
-                                break;
-                            case NPOI.SS.UserModel.CellType.String:
-                                dgwValidateScreen[j, i].Value = sh.GetRow(i).GetCell(j).StringCellValue;
-                                break;
-                            case NPOI.SS.UserModel.CellType.Unknown:
-                                dgwValidateScreen[j, i].Value = sh.GetRow(i).GetCell(j).StringCellValue;
-                                break;
+                            existBarList.Add(j);
+                            break;
                         }
                     }
                 }
-                i++;
+
+                dgwValidateScreen.Rows[0].Selected = false;
+                foreach (var ind in existBarList)
+                    dgwValidateScreen.Rows[ind].Selected = true;
+
+                SP.duplicateCnt = existBarList.Count;
+                statisticsItemsUpdateAndShow(lbStatistics, SP);
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show("XLS writing error:\n " + ex.ToString(),
+                    Settings.Default.messageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                
+            }
+            
         }
 
-        private void ExportToXls(object sender, EventArgs e)
+        private bool ExportToXls(object sender, EventArgs e, bool xlsSelected)
         {
-            string date = DateTime.Now.ToString("yyyyMMdd_HHmmss");
-            xlsPath = parentMF.mainFolderPath + "\\Outputs__" + date + ".xls";
+            bool done = false;
+            xlsPath = xlsSelected ? parentMF.mainXlsPath : parentMF.mainFolderPath + "\\Outputs.xls";
 
-            if (!File.Exists(xlsPath)) WriteToXls();
+            if (!xlsSelected)
+            {
+                while (File.Exists(xlsPath))
+                {
+                    bool write = RenameXls();
+                    if (!write)
+                        break;
+                }
+                
+                done = WriteAtEmptyXls();
+            }
             else
             {
-                xlsPath = xlsPath.Substring(0, xlsPath.Length - 4) + "_2.xls";
-                WriteToXls();
+                done = WriteBelowExistingXls();
             }
+            return done;
+
         }
 
-        private void WriteToXls()
+        private bool WriteBelowExistingXls()
         {
-            wb = HSSFWorkbook.Create(InternalWorkbook.CreateWorkbook());
-            // create sheet
-            sh = (HSSFSheet) wb.CreateSheet("Main");
-
-            sh.CreateRow(0);
-            sh.GetRow(0).CreateCell(0);
-            sh.GetRow(0).CreateCell(1);
-            sh.GetRow(0).CreateCell(2);
-            sh.GetRow(0).GetCell(0).SetCellValue("Order");
-            sh.GetRow(0).GetCell(1).SetCellValue("Barcode");
-            sh.GetRow(0).GetCell(2).SetCellValue("MICR Control");
-
-            for (int i = 0; i < dgwValidateScreen.RowCount; i++)
-            {
-                if (sh.GetRow(i + 1) == null)
-                    sh.CreateRow(i + 1);
-                //TODO: else
-
-                for (int j = 0; j < dgwValidateScreen.ColumnCount; j++)
-                {
-                    if (sh.GetRow(i + 1).GetCell(j) == null) sh.GetRow(i + 1).CreateCell(j);
-
-                    if (dgwValidateScreen[j, i].Value != null)
-                        sh.GetRow(i + 1).GetCell(j).SetCellValue(dgwValidateScreen[j, i].Value.ToString());
-                }
-            }
-
-            //Write Statistics
-            for (int i = 2; i < 6; i++)
-            {
-                if (sh.GetRow(i) == null) sh.CreateRow(i);
-
-                sh.GetRow(i).CreateCell(4);
-                sh.GetRow(i).CreateCell(5);
-            }
-
-            sh.GetRow(2).GetCell(4).SetCellValue("Processed:");
-            sh.GetRow(2).GetCell(5).SetCellValue(SP.imgCnt);
-
-            sh.GetRow(3).GetCell(4).SetCellValue("Valid:");
-            sh.GetRow(3).GetCell(5).SetCellValue(SP.validCnt);
-
-            sh.GetRow(4).GetCell(4).SetCellValue("Invalid:");
-            sh.GetRow(4).GetCell(5).SetCellValue(SP.invCnt);
-
-            sh.GetRow(5).GetCell(4).SetCellValue("Reused:");
-            sh.GetRow(5).GetCell(5).SetCellValue(SP.reusedCnt);
+            
+            // create xls if not exists
             try
             {
-                using (var fs = new FileStream(xlsPath, FileMode.Create, FileAccess.Write))
+                using (var fs = new FileStream(xlsPath, FileMode.Open, FileAccess.ReadWrite))
+                    wb = new HSSFWorkbook(fs);
+                // get sheet
+                sh = (HSSFSheet) wb.GetSheet("Sheet1");
+                int lastRow = 0;
+                if (sh != null) lastRow = sh.LastRowNum;
+
+                int ii = 0;
+                for (int i = lastRow; i < lastRow + dgwValidateScreen.RowCount; i++, ii++)
                 {
-                    wb.Write(fs);
+                    if (sh.GetRow(i + 1) == null) sh.CreateRow(i + 1);
+
+                    for (int j = 0; j < dgwValidateScreen.ColumnCount; j++)
+                    {
+                        if (sh.GetRow(i + 1).GetCell(j) == null) sh.GetRow(i + 1).CreateCell(j);
+
+                        if (dgwValidateScreen[j, ii].Value != null)
+                            sh.GetRow(i + 1).GetCell(j).SetCellValue(dgwValidateScreen[j, ii].Value.ToString());
+                    }
+                    //Add Date Column
+                    string date = DateTime.Now.ToString("yyyyMMdd_HHmm");
+                    if (sh.GetRow(i + 1).GetCell(3) == null) sh.GetRow(i + 1).CreateCell(3);
+
+                    sh.GetRow(i + 1).GetCell(3).SetCellValue(date);
+                    using (var fs = new FileStream(xlsPath, FileMode.Open, FileAccess.ReadWrite))
+                    {
+                        wb.Write(fs);
+                    }
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show("XLS writing error:\n " + ex.ToString(),
-                    Settings.Default.messageBoxTitle,MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                    Settings.Default.messageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                return false;
             }
+            return true;
+
+
+        }
+            
+        private bool RenameXls()
+        {
+            DialogResult dresult = MessageBox.Show("The file at " + xlsPath +
+                            " is exist. \n Do you want to rename as " + xlsPath.Substring(0, xlsPath.Length - 4) 
+                            + "_2.xls", Settings.Default.messageBoxTitle, MessageBoxButtons.YesNo, 
+                            MessageBoxIcon.Question);
+            xlsPath = (dresult == DialogResult.Yes)
+                ? xlsPath.Substring(0, xlsPath.Length - 4) + "_2.xls"
+                : xlsPath;
+            bool result = (dresult == DialogResult.Yes) ?  true:  false;
+            return result;
+        }
+
+        private bool WriteAtEmptyXls()
+        {
+            try
+            {
+                wb = HSSFWorkbook.Create(InternalWorkbook.CreateWorkbook());
+                // create sheet
+                sh = (HSSFSheet)wb.CreateSheet("Sheet1");
+                WriteHeaderToEmptyXls();
+
+                for (int i = 0; i < dgwValidateScreen.RowCount; i++)
+                {
+                    if (sh.GetRow(i + 1) == null)
+                        sh.CreateRow(i + 1);
+                    //TODO: else
+
+                    for (int j = 0; j < dgwValidateScreen.ColumnCount; j++)
+                    {
+                        if (sh.GetRow(i + 1).GetCell(j) == null) sh.GetRow(i + 1).CreateCell(j);
+
+                        if (dgwValidateScreen[j, i].Value != null)
+                            sh.GetRow(i + 1).GetCell(j).SetCellValue(dgwValidateScreen[j, i].Value.ToString());
+                    }
+                    //Add Date Column
+                    string date = DateTime.Now.ToString("yyyyMMdd_HHmm");
+                    if (sh.GetRow(i + 1).GetCell(3) == null) sh.GetRow(i + 1).CreateCell(3);
+                    sh.GetRow(i + 1).GetCell(3).SetCellValue(date);
+                }
+
+                using (var fs = new FileStream(xlsPath, FileMode.Create, FileAccess.Write))
+                {
+                    wb.Write(fs);
+                }
+
+                //Write Statistics Screen to Right Side of XLS
+                //WriteStatsToXls();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("XLS writing error:\n " + ex.ToString(),
+                    Settings.Default.messageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Stop);
+
+                return false;
+            }
+
+            return true;
+        }
+
+        private void WriteHeaderToEmptyXls()
+        {
+            sh.CreateRow(0);
+            sh.GetRow(0).CreateCell(0);
+            sh.GetRow(0).CreateCell(1);
+            sh.GetRow(0).CreateCell(2);
+            sh.GetRow(0).CreateCell(3);
+            sh.GetRow(0).GetCell(0).SetCellValue("Order");
+            sh.GetRow(0).GetCell(1).SetCellValue("Barcode");
+            sh.GetRow(0).GetCell(2).SetCellValue("MICR Control");
+            sh.GetRow(0).GetCell(3).SetCellValue("Date");
+        }
+
+        private void WriteStatsToXls()
+        {
+            for (int i = 2; i < 6; i++)
+            {
+                if (sh.GetRow(i) == null) sh.CreateRow(i);
+
+                sh.GetRow(i).CreateCell(5);
+                sh.GetRow(i).CreateCell(6);
+            }
+
+            sh.GetRow(2).GetCell(5).SetCellValue("Processed:");
+            sh.GetRow(2).GetCell(6).SetCellValue(SP.imgCnt);
+
+            sh.GetRow(3).GetCell(5).SetCellValue("Valid:");
+            sh.GetRow(3).GetCell(6).SetCellValue(SP.validCnt);
+
+            sh.GetRow(4).GetCell(5).SetCellValue("Invalid:");
+            sh.GetRow(4).GetCell(6).SetCellValue(SP.invCnt);
+
+            sh.GetRow(5).GetCell(5).SetCellValue("Reused:");
+            sh.GetRow(5).GetCell(6).SetCellValue(SP.reusedCnt);
         }
     }
 }

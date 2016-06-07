@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MICR_Test_Form));
             this.btnStart = new System.Windows.Forms.Button();
             this.lblStat = new System.Windows.Forms.Label();
             this.lbStatistics = new System.Windows.Forms.ListBox();
@@ -119,6 +120,7 @@
             this.Controls.Add(this.lbStatistics);
             this.Controls.Add(this.btnClear);
             this.Controls.Add(this.btnStart);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MICR_Test_Form";
             this.Text = "MICR_Test_Form";
             this.ResumeLayout(false);

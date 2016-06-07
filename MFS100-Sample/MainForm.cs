@@ -56,7 +56,9 @@ namespace RedRose_VoucherScanner
       private string username;
       private string password;
       public string mainFolderPath;
-
+      public string mainXlsPath;
+      public bool xlsSelected = false;
+       public bool validFormIsOpen = false;
       public string Username
       {
           get
@@ -583,6 +585,13 @@ namespace RedRose_VoucherScanner
 
       private void btnStart_Click(object sender, EventArgs e)
       {
+          if (validFormIsOpen)
+          {
+              MessageBox.Show("Voucher Reading Screen is open, cannot open new  screen",
+                                  Settings.Default.messageBoxTitle,
+                                   MessageBoxButtons.OK, MessageBoxIcon.Stop);
+              return;
+          }
          bool  bSortByScanAndEject;
          bool  bErrorsFound;
          int  iFeedMode;
@@ -604,8 +613,19 @@ namespace RedRose_VoucherScanner
          try
          {
              FolderBrowserDialog fbd = new FolderBrowserDialog();
+             fbd.Description = "Choose the folder for saving excel file and images";
              DialogResult result = fbd.ShowDialog();
              mainFolderPath = (result == DialogResult.OK) ? fbd.SelectedPath : @"C:\RedRose\Images";
+
+             OpenFileDialog ofd = new OpenFileDialog();
+             ofd.Title = "Choose an excel file to save and check dupliate";
+             ofd.InitialDirectory = mainFolderPath;
+             ofd.DereferenceLinks = true;
+             ofd.Filter = "Excel|*.xls";
+             //ofd.Filter = "*.xls";
+             DialogResult result2 = ofd.ShowDialog();
+             mainXlsPath = (result2 == DialogResult.OK) ? ofd.FileName : "Output.xls";
+             xlsSelected = (result2 == DialogResult.OK) ? true : false;
          }
           catch (Exception ex)
           {
@@ -613,7 +633,6 @@ namespace RedRose_VoucherScanner
               MessageBox.Show("Folder Browser Error: " + ex.ToString(), 
                                   Settings.Default.messageBoxTitle,
                                    MessageBoxButtons.OK, MessageBoxIcon.Stop);
-              throw ;
           }
          
 
@@ -5104,29 +5123,13 @@ namespace RedRose_VoucherScanner
                                     tConfig.tScanning.tFrontSide1.eFormat, 1, sbErrorMsg);
                   }
                   Application.DoEvents();
-                 
-                 
               }
               // If single feed failed
               if(iResult > 0)
               {
-                  break;
-                  //TODO: show message                
-
+                      break;
               }
-
-  //            if (iResult < 0)
-  //            {
-  //                break;
-  ////TODO: show message                
-                  
-  //            }
-
-             
           }
-
-             
-          
       }
 
       public List<String> voucherScanFake()
@@ -5377,7 +5380,7 @@ tempBarcodes.Add("90011-025-CC9");*/
           defaultCFG.tFeeding.eSource = CFG.FEED_SOURCE.RED_ROSE_BATCH;
           defaultCFG.tFeeding.bPipelineEnabled = true;
           defaultCFG.tFeeding.iTimeout = 5000;
-          defaultCFG.tFeeding.iDoublefeedThreshold = 120;
+          defaultCFG.tFeeding.iDoublefeedThreshold = 150;
           //
           defaultCFG.tReading.eFont = CFG.READ_FONT.E13B_MAGNETIC;
           defaultCFG.tReading.eMicrBlanks = CFG.READ_BLANKMODE.NORMAL;
